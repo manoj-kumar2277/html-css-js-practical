@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backend Lab — Code Viewer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0e16;--panel:#181724;--panel2:#201e2f;--line:#2f2c42;--text:#eceaf4;--dim:#9a95ad;--a:#7ee787;--js:#4fd1c5;--mono:'IBM Plex Mono',ui-monospace,Consolas,monospace}
+[data-theme=light]{--bg:#f5f2ec;--panel:#fffdf9;--panel2:#f0ece3;--line:#ddd6c8;--text:#1d1b26;--dim:#6b6679;--a:#1f8a3a;--js:#0d8f84}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:400 .9rem/1.5 var(--mono);display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}
+header{display:flex;align-items:center;gap:.8rem;padding:.7rem 1rem;border-bottom:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
+header b{font:700 1.05rem 'Space Grotesk',sans-serif;margin-right:auto}
+.btn{background:var(--panel2);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:.35rem .8rem;font:inherit;font-size:.82rem;cursor:pointer;display:inline-block}
+.btn:hover,.btn:focus-visible{border-color:var(--a)}.btn.on{background:var(--a);color:#0f0e16;border-color:var(--a)}
+#menu{display:none}
+.app{flex:1;display:flex;min-height:0}
+aside{width:320px;flex:none;border-right:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;min-height:0}
+.tabs{display:flex;gap:.4rem;padding:.7rem}.tabs .btn{flex:1;text-align:center}
+#f{margin:0 .7rem .6rem;padding:.55rem .7rem;background:var(--bg);border:1px solid var(--line);border-radius:8px;color:var(--text);font:inherit;font-size:.82rem}
+#f:focus{outline:2px solid var(--js);border-color:transparent}
+#tree{overflow:auto;padding:0 .4rem 1rem;flex:1}
+#tree h4{margin:.9rem .4rem .3rem;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);font-weight:500}
+#tree a{display:block;padding:.28rem .6rem;border-radius:6px;font-size:.8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--dim)}
+#tree a:hover{background:var(--panel2);color:var(--text)}#tree a.cur{background:var(--panel2);color:var(--a);box-shadow:inset 2px 0 var(--a)}
+main{flex:1;min-width:0;display:flex;flex-direction:column}
+.bar{display:flex;align-items:center;gap:.6rem;padding:.7rem 1rem;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.bar span{margin-right:auto;color:var(--dim);font-size:.8rem;word-break:break-all}.bar span b{color:var(--text);font-weight:500}
+.code{flex:1;overflow:auto;margin:0;padding:1rem 0;font-size:.82rem;line-height:1.65;tab-size:2}
+.code div{display:flex;padding-right:1.2rem}.code div:hover{background:var(--panel)}
+.code i{flex:none;width:3.6rem;text-align:right;padding-right:1rem;color:var(--dim);opacity:.6;font-style:normal;user-select:none}
+.code s{text-decoration:none;white-space:pre;flex:1}
+.note{padding:.4rem 1rem;font-size:.75rem;color:var(--dim);border-top:1px solid var(--line)}
+@media(max-width:760px){#menu{display:inline-block}aside{position:fixed;inset:0 25% 0 0;width:auto;z-index:5;transform:translateX(-101%);transition:transform .2s;top:0}aside.open{transform:none;box-shadow:0 0 0 100vw #0009}}
+</style>
+</head>
+<body>
+<header>
+  <button class="btn" id="menu">☰ Files</button>
+  <b>Backend Lab</b>
+  <a class="btn" href="index.html">⌂ Home</a>
+  <button class="btn" id="theme">◐ Theme</button>
+</header>
+<div class="app">
+  <aside id="side">
+    <div class="tabs"><button class="btn" data-lab="supabase">Supabase</button><button class="btn" data-lab="nodejs-backend">Node.js</button></div>
+    <input id="f" type="search" placeholder="Filter files…" aria-label="Filter files">
+    <nav id="tree" aria-label="Lab files"></nav>
+  </aside>
+  <main>
+    <div class="bar"><span id="path"></span><a class="btn" id="open" hidden target="_blank">Open in browser ↗</a><button class="btn" id="copy">Copy</button></div>
+    <pre class="code" id="code" tabindex="0"></pre>
+    <div class="note">Run Node files with <code>node &lt;file&gt;.js</code> · paste <code>.sql</code> files into the Supabase SQL Editor · <code>.html</code> files open in the browser.</div>
+  </main>
+</div>
+<script src="assets/backend-data.js"></script>
+<script>
+(function(){
+'use strict';
+const D = window.BACKEND || {tree:[], src:{}};
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const params = new URLSearchParams(location.search);
+let file = params.get('f') || '';
+let lab = file ? file.split('/')[0] : (params.get('lab') || 'supabase');
+
+const root = document.documentElement;
+try{ const t = localStorage.getItem('theme'); if(t) root.dataset.theme = t; }catch(e){}
+$('#theme').onclick = () => { root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  try{ localStorage.setItem('theme', root.dataset.theme); }catch(e){} };
+$('#menu').onclick = () => $('#side').classList.toggle('open');
+
+function tree(){
+  const term = $('#f').value.toLowerCase();
+  const groups = {};
+  D.tree.filter(t => t.p.startsWith(lab + '/') && t.p.toLowerCase().includes(term)).forEach(t => {
+    const parts = t.p.split('/'); const g = parts.length > 2 ? parts[1] : 'Overview'; (groups[g] = groups[g] || []).push(t.p); });
+  $('#tree').innerHTML = Object.keys(groups).map(g => `<h4>${esc(g.replace(/^\d+-/,'').replace(/-/g,' '))}</h4>` +
+    groups[g].map(p => `<a href="viewer.html?f=${encodeURIComponent(p).replace(/%2F/g,'/')}" data-p="${p}" class="${p===file?'cur':''}" title="${p}">${esc(p.split('/').slice(g==='Overview'?1:2).join('/'))}</a>`).join('')).join('')
+    || '<p style="padding:1rem;color:var(--dim)">No files match.</p>';
+  document.querySelectorAll('.tabs .btn').forEach(b => b.classList.toggle('on', b.dataset.lab === lab));
+}
+function show(p){
+  file = p; const src = D.src[p]; if(src === undefined) return;
+  const parts = p.split('/');
+  $('#path').innerHTML = parts.slice(0,-1).join(' / ') + ' / <b>' + esc(parts.pop()) + '</b>';
+  $('#code').innerHTML = src.split('\n').map((l,i) => `<div><i>${i+1}</i><s>${esc(l) || ' '}</s></div>`).join('');
+  $('#code').scrollTop = 0;
+  const o = $('#open'); o.hidden = !p.endsWith('.html'); o.href = 'backend-lab/' + p;
+  document.title = p + ' — Backend Lab';
+  tree();
+}
+document.querySelectorAll('.tabs .btn').forEach(b => b.onclick = () => { lab = b.dataset.lab;
+  const first = D.tree.find(t => t.p === lab + '/README.md') || D.tree.find(t => t.p.startsWith(lab + '/')); tree(); if(first) show(first.p); });
+$('#f').oninput = tree;
+$('#tree').onclick = e => { const a = e.target.closest('a'); if(!a) return; e.preventDefault();
+  show(a.dataset.p); history.replaceState(null, '', 'viewer.html?f=' + a.dataset.p); $('#side').classList.remove('open'); };
+$('#copy').onclick = async e => { try{ await navigator.clipboard.writeText(D.src[file] || ''); e.target.textContent = 'Copied ✓'; }
+  catch(_){ const r = document.createRange(); r.selectNodeContents($('#code')); getSelection().removeAllRanges(); getSelection().addRange(r); e.target.textContent = 'Selected — press Ctrl+C'; }
+  setTimeout(() => e.target.textContent = 'Copy', 1800); };
+
+tree();
+show(D.src[file] !== undefined ? file : ((D.tree.find(t => t.p === lab + '/README.md') || D.tree.find(t => t.p.startsWith(lab + '/')) || {}).p));
+})();
+</script>
+</body>
+</html>
