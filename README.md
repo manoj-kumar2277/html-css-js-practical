@@ -191,8 +191,8 @@ This project is pushed to **[manoj-kumar2277/html-css-js-practical](https://gith
 
 <table>
 <tr><td><b>Name</b></td><td>Manoj Kumar Reddy</td></tr>
-<tr><td><b>Register Number</b></td><td><i>fill in</i></td></tr>
-<tr><td><b>Class / Section</b></td><td><i>fill in</i></td></tr>
+<tr><td><b>Register Number</b></td><td><i>250200450</i></td></tr>
+<tr><td><b>Class / Section</b></td><td><i>06</i></td></tr>
 <tr><td><b>Subject</b></td><td>HTML, CSS, JavaScript & MySQL Practicals</td></tr>
 <tr><td><b>Institution</b></td><td>Sai University — School of Computing & Data Science</td></tr>
 <tr><td><b>Programs Completed</b></td><td><img alt="491/491" src="https://img.shields.io/badge/-491%2F491-success?style=flat-square"></td></tr>
