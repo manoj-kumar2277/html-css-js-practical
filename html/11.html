@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>11. Internal and External CSS</title>
+
+<!-- EXTERNAL CSS: linked from a separate .css file -->
+<link rel="stylesheet" href="11-external.css">
+
+<!-- INTERNAL CSS: written directly inside a <style> tag -->
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background:#f9fafb; color:#212529; max-width:800px; margin:40px auto; padding:0 20px; }
+  h1 { color:#3f37c9; text-align:center; }
+  .internal-box {
+    background:#e7f5ff;
+    border:3px solid #3f37c9;
+    padding:18px 22px;
+    border-radius:10px;
+    margin:20px 0;
+  }
+  .internal-box h2 { color:#1d3557; }
+</style>
+</head>
+<body>
+
+  <h1>Internal vs External CSS</h1>
+
+  <div class="internal-box">
+    <h2>Styled with Internal CSS</h2>
+    <p>This box's styles are written directly inside the <code>&lt;style&gt;</code> tag in this HTML file's &lt;head&gt;.</p>
+  </div>
+
+  <div class="external-box">
+    <h2>Styled with External CSS</h2>
+    <p>This box's styles come from a separate file called <code>11-external.css</code>, linked using <code>&lt;link rel="stylesheet"&gt;</code>.</p>
+  </div>
+
+  <footer>Keep the file <code>11-external.css</code> in the same folder as this page.</footer>
+
+  <nav style="margin-top:30px; padding-top:15px; border-top:2px solid #0f6674;">
+    <a href="../index.html" style="margin-right:15px; color:#0f6674; font-weight:bold; text-decoration:none;">🏠 Home</a>
+    <a href="index.html" style="color:#0f6674; font-weight:bold; text-decoration:none;">⬅ Back to HTML Programs</a>
+  </nav>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JavaScript Objects - JavaScript Program</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 { color: #2c3e50; }
+    p.description { color: #555; margin-bottom: 20px; }
+    .inputs { margin: 15px 0; }
+    .inputs input, .inputs textarea {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 15px;
+      width: 200px;
+    }
+    #output {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2980b9;
+      margin: 20px 0;
+      min-height: 30px;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      text-align: left;
+      background: #f0f6fb;
+      padding: 10px;
+      border-radius: 6px;
+    }
+    button {
+      background: #2980b9;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover { background: #1c5d8a; }
+    nav { margin-top: 20px; }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #2980b9;
+      font-weight: bold;
+    }
+    nav a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>JavaScript Objects</h1>
+    <p class="description">Demonstrates creating an object, accessing properties, and using object methods.</p>
+
+    <button onclick="runObjectDemo()">Run Demo</button>
+
+    <div id="output"></div>
+
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="index.html">JavaScript Programs</a>
+    </nav>
+  </div>
+
+  <script>
+    // Demonstrate JavaScript objects
+    const student = {
+      name: "Arjun",
+      age: 20,
+      course: "Computer Science",
+      greet: function() {
+        return "Hi, I am " + this.name + " and I study " + this.course;
+      }
+    };
+
+    function runObjectDemo() {
+      const outputDiv = document.getElementById("output");
+
+      let details = "Object: " + JSON.stringify(student, (key, value) =>
+        typeof value === "function" ? undefined : value, 2) + "\n\n";
+
+      details += "Accessing property (dot): student.name = " + student.name + "\n";
+      details += "Accessing property (bracket): student[\"age\"] = " + student["age"] + "\n";
+      details += "Method call: student.greet() = " + student.greet() + "\n";
+
+      student.year = 2;
+      details += "After adding new property, student.year = " + student.year;
+
+      outputDiv.textContent = details;
+    }
+  </script>
+</body>
+</html>

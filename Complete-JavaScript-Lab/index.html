@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complete JavaScript Lab — Master Index</title>
+<style>
+  :root{
+    --bg:#0f1220; --panel:#171b2e; --panel2:#1d2238; --border:#2a2f4a;
+    --text:#e8e9f3; --muted:#9aa1c3; --accent:#7c8cff; --accent2:#4fd6c2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(circle at top left,#1a1f3a,#0b0d17 60%);
+    color:var(--text); min-height:100vh; padding:56px 20px 70px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;}
+  header{text-align:center;margin-bottom:46px;}
+  header .badge{
+    display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#0b0d17;font-weight:700;padding:6px 18px;border-radius:20px;font-size:13px;margin-bottom:16px;
+  }
+  header h1{font-size:38px;margin:8px 0 10px;background:linear-gradient(135deg,#fff,#b8bfff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  header p{color:var(--muted);font-size:16px;margin:0;max-width:600px;margin:0 auto;}
+  .stats{display:flex;gap:16px;justify-content:center;margin-top:26px;flex-wrap:wrap;}
+  .stat{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:16px 28px;text-align:center;min-width:120px;}
+  .stat b{display:block;font-size:28px;color:var(--accent2);}
+  .stat span{font-size:12px;color:var(--muted);}
+  .modules{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;}
+  @media (max-width:720px){ .modules{grid-template-columns:1fr;} }
+  .module{
+    background:linear-gradient(180deg,var(--panel),var(--panel2));
+    border:1px solid var(--border); border-radius:18px; padding:26px 24px;
+    text-decoration:none; color:var(--text); transition:.2s; display:flex; flex-direction:column; gap:10px;
+  }
+  .module:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 14px 32px rgba(124,140,255,.25);}
+  .module .icon{font-size:30px;}
+  .module h2{margin:0;font-size:18px;}
+  .module p{margin:0;color:var(--muted);font-size:13px;line-height:1.5;}
+  .module .count{align-self:flex-start;background:#232848;color:var(--accent2);font-weight:700;font-size:12px;padding:4px 12px;border-radius:20px;margin-top:4px;}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:60px;}
+</style>
+</head>
+<body>
+<a href="../index.html" style="position:fixed;top:12px;left:12px;z-index:99;padding:6px 12px;border-radius:8px;background:#181724;color:#eceaf4;border:1px solid #2f2c42;font:500 13px system-ui,sans-serif;text-decoration:none">&larr; Dashboard</a>
+<div class="wrap">
+  <header>
+    <span class="badge">Complete JavaScript Lab</span>
+    <h1>JavaScript Lab Programs</h1>
+    <p>Every exercise across Core JavaScript, DOM Manipulation, Events, Forms, Browser APIs and Mini Projects — 161 fully working, interactive programs in one place.</p>
+    <div class="stats">
+      <div class="stat"><b>161</b><span>Total Programs</span></div>
+      <div class="stat"><b>7</b><span>Modules</span></div>
+      <div class="stat"><b>100%</b><span>Runnable in Browser</span></div>
+    </div>
+  </header>
+
+  <div class="modules">
+    <a class="module" href="01-Core-JavaScript-Programs/index.html">
+      <span class="icon">🧩</span>
+      <span class="count">65 Programs</span>
+      <h2>Core JavaScript Programs</h2>
+      <p>Fundamentals, arrays &amp; strings, functions, objects, DOM &amp; events basics, and advanced ES6+ concepts including classes, promises, fetch and localStorage.</p>
+    </a>
+    <a class="module" href="02-DOM-Manipulation-Programs/index.html">
+      <span class="icon">🛠️</span>
+      <span class="count">15 Programs</span>
+      <h2>DOM Manipulation — Part 1</h2>
+      <p>Dynamic element creation/removal, live style &amp; class changes, dynamic tables with add/delete/search, live counters, dependent dropdowns, and a carousel.</p>
+    </a>
+    <a class="module" href="03-JavaScript-Events-Lab/index.html">
+      <span class="icon">⚡</span>
+      <span class="count">30 Programs</span>
+      <h2>JavaScript Events Lab</h2>
+      <p>Mouse, keyboard and form events, addEventListener, bubbling vs. capturing, delegation, drag-and-drop, and mini games (reaction test, typing test).</p>
+    </a>
+    <a class="module" href="04-Forms-and-Validation/index.html">
+      <span class="icon">📝</span>
+      <span class="count">7 Programs</span>
+      <h2>Forms &amp; Validation</h2>
+      <p>Registration, login, password strength, signup confirmation, feedback and admission forms, plus live inline error messages with no page reload.</p>
+    </a>
+    <a class="module" href="05-Browser-and-Storage/index.html">
+      <span class="icon">🌐</span>
+      <span class="count">8 Programs</span>
+      <h2>Browser &amp; Storage</h2>
+      <p>The window, navigator, location and history objects, localStorage &amp; sessionStorage, a persistent shopping cart, and a light/dark theme switcher.</p>
+    </a>
+    <a class="module" href="06-Mini-Projects/index.html">
+      <span class="icon">🚀</span>
+      <span class="count">17 Programs</span>
+      <h2>Mini Projects</h2>
+      <p>Calculator, clock, stopwatch, countdown, to-do list, quiz, guessing game, tic-tac-toe, expense tracker, BMI calculator, a live weather app and currency converter, and a portfolio site.</p>
+    </a>
+    <a class="module" href="07-Advanced-DOM-Manipulation/index.html">
+      <span class="icon">🧠</span>
+      <span class="count">19 Programs</span>
+      <h2>DOM Manipulation — Part 2</h2>
+      <p>Editable tables, sortable tables, image galleries, tabs, accordions, modals, tooltips, live word counter, and the core createElement/appendChild/remove/replaceChild toolkit.</p>
+    </a>
+  </div>
+
+  <footer>SAI University · Section Sec-06 · Complete JavaScript Lab</footer>
+</div>
+</body>
+</html>

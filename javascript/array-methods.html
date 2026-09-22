@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Array Methods Demo - JavaScript Program</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 { color: #2c3e50; }
+    p.description { color: #555; margin-bottom: 20px; }
+    .inputs { margin: 15px 0; }
+    .inputs input, .inputs textarea {
+      padding: 8px;
+      margin: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 15px;
+      width: 200px;
+    }
+    #output {
+      font-size: 18px;
+      font-weight: bold;
+      color: #2980b9;
+      margin: 20px 0;
+      min-height: 30px;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      text-align: left;
+      background: #f0f6fb;
+      padding: 10px;
+      border-radius: 6px;
+    }
+    button {
+      background: #2980b9;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover { background: #1c5d8a; }
+    nav { margin-top: 20px; }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #2980b9;
+      font-weight: bold;
+    }
+    nav a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Array Methods Demo</h1>
+    <p class="description">Enter comma-separated numbers to see common array methods in action.</p>
+
+    <div class="inputs">
+      <input type="text" id="arrInput" placeholder="e.g. 1, 2, 3, 4, 5" style="width:260px;" />
+    </div>
+    <button onclick="runArrayDemo()">Run Demo</button>
+
+    <div id="output"></div>
+
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="index.html">JavaScript Programs</a>
+    </nav>
+  </div>
+
+  <script>
+    // Demonstrate common array methods
+    function runArrayDemo() {
+      const input = document.getElementById("arrInput").value;
+      const outputDiv = document.getElementById("output");
+
+      const arr = input.split(",").map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+
+      if (arr.length === 0) {
+        outputDiv.textContent = "Please enter valid comma-separated numbers.";
+        return;
+      }
+
+      const doubled = arr.map(n => n * 2);
+      const evens = arr.filter(n => n % 2 === 0);
+      const total = arr.reduce((acc, n) => acc + n, 0);
+
+      outputDiv.textContent =
+        "Original: [" + arr.join(", ") + "]\n" +
+        "map (doubled): [" + doubled.join(", ") + "]\n" +
+        "filter (evens): [" + evens.join(", ") + "]\n" +
+        "reduce (total): " + total + "\n" +
+        "includes 3: " + arr.includes(3) + "\n" +
+        "indexOf 3: " + arr.indexOf(3);
+    }
+  </script>
+</body>
+</html>

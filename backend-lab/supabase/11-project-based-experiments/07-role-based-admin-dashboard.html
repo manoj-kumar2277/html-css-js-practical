@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--
+  Project: Role-Based Admin Dashboard using Supabase Authentication and RLS
+  Setup  : run 07-role-based-admin-dashboard-rls.sql, register two users, promote one to admin with the SQL at the bottom of that file.
+  Behaviour: the UI hides admin features from normal users, BUT the real protection is RLS in the database
+             (a normal user who calls the API directly still gets blocked).
+-->
+<html>
+<head>
+  <meta charset="utf-8"><title>Admin Dashboard</title>
+  <style>
+    body{font-family:Segoe UI,Arial;margin:0;background:#f1f5f9}nav{background:#0f172a;color:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center}
+    .badge{padding:2px 10px;border-radius:12px;font-size:12px;background:#22c55e}.badge.user{background:#64748b}
+    .wrap{max-width:1000px;margin:20px auto;padding:0 14px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+    .stat{background:#fff;padding:16px;border-radius:10px;text-align:center;box-shadow:0 1px 5px #0001}.stat b{display:block;font-size:26px;color:#2563eb}
+    .card{background:#fff;padding:16px;border-radius:10px;margin-bottom:16px;box-shadow:0 1px 5px #0001}table{width:100%;border-collapse:collapse}th,td{padding:8px;border-bottom:1px solid #e2e8f0;text-align:left}
+    input,select{padding:7px;margin:3px}button{padding:7px 12px;border:0;border-radius:6px;background:#2563eb;color:#fff;cursor:pointer}button.d{background:#dc2626}
+    #login{max-width:340px;margin:80px auto;background:#fff;padding:24px;border-radius:12px;box-shadow:0 2px 12px #0002}#login input{width:100%;box-sizing:border-box}.hide{display:none}#err{color:#dc2626}
+  </style>
+</head>
+<body>
+<div id="login"><h2>Sign in</h2><input id="email" placeholder="email"><input id="password" type="password" placeholder="password">
+  <button onclick="auth(false)">Login</button> <button onclick="auth(true)" style="background:#64748b">Register</button><p id="err"></p></div>
+
+<div id="dash" class="hide">
+  <nav><b>Dashboard</b><span><span id="who"></span> <span id="role" class="badge"></span> <button onclick="sb.auth.signOut()">Logout</button></span></nav>
+  <div class="wrap">
+    <div class="stats admin hide"><div class="stat">Users<b id="s_users">-</b></div><div class="stat">Admins<b id="s_admins">-</b></div>
+      <div class="stat">Students<b id="s_students">-</b></div><div class="stat">Products<b id="s_products">-</b></div></div>
+
+    <div class="card admin hide"><h3>User management (admin only)</h3>
+      <table><thead><tr><th>Name</th><th>ID</th><th>Role</th></tr></thead><tbody id="users"></tbody></table></div>
+
+    <div class="card"><h3>Products</h3>
+      <div class="admin hide"><input id="pname" placeholder="name"><input id="pprice" type="number" placeholder="price"><input id="pstock" type="number" placeholder="stock"><button onclick="addProduct()">Add</button></div>
+      <table><thead><tr><th>Name</th><th>Price</th><th>Stock</th><th class="admin hide"></th></tr></thead><tbody id="products"></tbody></table></div>
+
+    <div class="card"><h3>Try to break the rules (RLS test)</h3>
+      <button onclick="tryPromote()">Promote myself to admin</button> <button onclick="tryDelete()">Delete first product</button> <pre id="test"></pre></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
+  const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const $ = (i) => document.getElementById(i); let me = null, isAdmin = false;
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+
+  async function auth(reg) {
+    const c = { email: $('email').value, password: $('password').value };
+    const { error } = reg ? await sb.auth.signUp(c) : await sb.auth.signInWithPassword(c);
+    $('err').textContent = error ? error.message : reg ? 'Registered - now login' : '';
+  }
+  async function init(user) {
+    me = user; $('login').classList.add('hide'); $('dash').classList.remove('hide'); $('who').textContent = user.email;
+    const { data: p } = await sb.from('profiles').select('role').eq('id', user.id).single();
+    isAdmin = p?.role === 'admin'; $('role').textContent = p?.role || 'user'; $('role').className = 'badge ' + (isAdmin ? '' : 'user');
+    document.querySelectorAll('.admin').forEach((el) => el.classList.toggle('hide', !isAdmin));
+    loadProducts(); if (isAdmin) { loadStats(); loadUsers(); }
+  }
+  async function loadStats() {
+    const { data, error } = await sb.rpc('admin_stats'); if (error) return console.error(error.message);
+    for (const k of ['users', 'admins', 'students', 'products']) $('s_' + k).textContent = data[k];
+  }
+  async function loadUsers() {
+    const { data } = await sb.from('profiles').select('*').order('created_at');
+    $('users').innerHTML = data.map((u) => `<tr><td>${esc(u.full_name)}</td><td><small>${u.id}</small></td>
+      <td><select onchange="setRole('${u.id}', this.value)"><option ${u.role === 'user' ? 'selected' : ''}>user</option><option ${u.role === 'admin' ? 'selected' : ''}>admin</option></select></td></tr>`).join('');
+  }
+  async function setRole(id, role) { const { error } = await sb.from('profiles').update({ role }).eq('id', id); if (error) alert(error.message); loadUsers(); loadStats(); }
+  async function loadProducts() {
+    const { data } = await sb.from('products').select('*').order('id');
+    $('products').innerHTML = (data || []).map((p) => `<tr><td>${esc(p.name)}</td><td>${p.price}</td><td>${p.stock}</td>${isAdmin ? `<td><button class="d" onclick="delProduct(${p.id})">Delete</button></td>` : ''}</tr>`).join('');
+  }
+  async function addProduct() {
+    const { error } = await sb.from('products').insert({ name: $('pname').value, price: +$('pprice').value, stock: +$('pstock').value }); if (error) alert(error.message); loadProducts(); loadStats();
+  }
+  async function delProduct(id) { const { error } = await sb.from('products').delete().eq('id', id); if (error) alert(error.message); loadProducts(); loadStats(); }
+
+  async function tryPromote() {
+    const { data, error } = await sb.from('profiles').update({ role: 'admin' }).eq('id', me.id).select();
+    $('test').textContent = error ? 'BLOCKED: ' + error.message : data.length ? 'Allowed! (you are admin already?)' : 'BLOCKED by RLS: 0 rows updated';
+  }
+  async function tryDelete() {
+    const { data: first } = await sb.from('products').select('id').limit(1).maybeSingle(); if (!first) return ($('test').textContent = 'No products');
+    const { data, error } = await sb.from('products').delete().eq('id', first.id).select();
+    $('test').textContent = error ? 'BLOCKED: ' + error.message : data.length ? 'Deleted (you are admin)' : 'BLOCKED by RLS: 0 rows deleted'; loadProducts();
+  }
+  sb.auth.onAuthStateChange((_e, s) => { if (s) { if (!me) init(s.user); } else { me = null; $('login').classList.remove('hide'); $('dash').classList.add('hide'); } });
+</script></body></html>

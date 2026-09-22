@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practical Programs — HTML · CSS · JavaScript</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0e16;--panel:#181724;--panel2:#201e2f;--line:#2f2c42;--text:#eceaf4;--dim:#9a95ad;
+--html:#ff6b7a;--css:#e8a33d;--js:#4fd1c5;--lab:#a394ff;--be:#7ee787;--grid:#ffffff08;
+--display:'Space Grotesk',system-ui,sans-serif;--body:'Inter',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,Consolas,monospace}
+[data-theme=light]{--bg:#f5f2ec;--panel:#fffdf9;--panel2:#f0ece3;--line:#ddd6c8;--text:#1d1b26;--dim:#6b6679;
+--html:#d93a4d;--css:#b7710f;--js:#0d8f84;--lab:#6552e0;--be:#1f8a3a;--grid:#00000008}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:400 1rem/1.6 var(--body);
+background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:44px 44px}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 1.25rem}
+nav{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 0;font:500 .85rem var(--mono)}
+.brand b{color:var(--html)}.brand i{color:var(--js);font-style:normal}
+.btn-ghost{background:var(--panel);border:1px solid var(--line);color:var(--text);border-radius:8px;padding:.4rem .8rem;font:inherit;cursor:pointer}
+.btn-ghost:hover,.btn-ghost:focus-visible{border-color:var(--js)}
+.hero{padding:3.2rem 0 1.6rem}
+.eyebrow{font:500 .8rem var(--mono);color:var(--dim);letter-spacing:.04em}
+h1{font:700 clamp(2.2rem,6.4vw,4.4rem)/1.03 var(--display);letter-spacing:-.03em;margin:.6rem 0 1rem}
+h1 .h{color:var(--html)}h1 .c{color:var(--css)}h1 .j{color:var(--js)}
+h1 .tag{font-family:var(--mono);font-weight:400;opacity:.55;font-size:.6em}
+.sub{color:var(--dim);max-width:58ch;margin:0 0 1.6rem}
+.search{display:flex;align-items:center;gap:.7rem;background:var(--panel);border:1.5px solid var(--line);border-radius:12px;padding:.25rem .9rem;max-width:720px;transition:border-color .15s,box-shadow .15s}
+.search:focus-within{border-color:var(--js);box-shadow:0 0 0 4px color-mix(in srgb,var(--js) 18%,transparent)}
+.search span{font:500 1.05rem var(--mono);color:var(--js)}
+.search input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--text);font:400 1rem var(--mono);padding:.8rem 0}
+kbd{font:500 .72rem var(--mono);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:.05rem .4rem;color:var(--dim)}
+.filters{display:flex;flex-wrap:wrap;gap:.45rem;margin:.9rem 0 0}
+.chip{font:500 .78rem var(--mono);background:transparent;color:var(--dim);border:1px solid var(--line);border-radius:99px;padding:.25rem .75rem;cursor:pointer}
+.chip:hover{color:var(--text)}.chip[aria-pressed=true]{background:var(--text);color:var(--bg);border-color:var(--text)}
+#results{display:none;margin-top:1rem;max-width:720px;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+#results.on{display:block}
+#results .meta{padding:.55rem 1rem;font:400 .75rem var(--mono);color:var(--dim);border-bottom:1px solid var(--line)}
+#results ul{list-style:none;margin:0;padding:0;max-height:min(52vh,430px);overflow:auto}
+#results a{display:flex;align-items:center;gap:.8rem;padding:.6rem 1rem;border-bottom:1px solid var(--line)}
+#results li:last-child a{border:0}
+#results a:hover,#results a.sel{background:var(--panel2)}
+#results .t{flex:1;min-width:0}#results .g{display:block;font:400 .74rem var(--mono);color:var(--dim)}
+mark{background:color-mix(in srgb,var(--css) 35%,transparent);color:inherit;border-radius:3px}
+.badge{font:500 .68rem var(--mono);padding:.15rem .5rem;border-radius:5px;color:var(--bg);white-space:nowrap}
+.empty{padding:1.4rem 1rem;color:var(--dim)}
+h2{font:700 1.15rem var(--display);margin:2.6rem 0 1rem;display:flex;align-items:center;gap:.7rem}
+h2::after{content:"";flex:1;height:1px;background:var(--line)}
+.grid{display:grid;gap:1.1rem}.g3{grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}.g2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.card{--a:var(--js);position:relative;display:flex;flex-direction:column;gap:.7rem;background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--a);border-radius:14px;padding:1.4rem;transition:transform .18s,box-shadow .18s,border-color .18s}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 34px -14px var(--a);border-color:var(--a)}
+.card.html{--a:var(--html)}.card.css{--a:var(--css)}.card.js{--a:var(--js)}.card.lab{--a:var(--lab)}.card.be{--a:var(--be)}
+.card h3{font:700 1.45rem var(--display);margin:0;letter-spacing:-.01em}
+.top{display:flex;justify-content:space-between;align-items:center;font:500 .78rem var(--mono);color:var(--dim)}
+.num{color:var(--a);font-weight:500}
+.card p{margin:0;color:var(--dim);font-size:.93rem}
+pre{margin:.2rem 0;background:var(--panel2);border:1px solid var(--line);border-radius:9px;padding:.7rem .85rem;font:400 .78rem/1.55 var(--mono);color:var(--dim);overflow:hidden;white-space:pre}
+pre b{color:var(--a);font-weight:400}
+.go{margin-top:auto;display:inline-flex;align-items:center;justify-content:space-between;background:var(--a);color:#0f0e16;font:600 .92rem var(--body);padding:.7rem 1rem;border-radius:9px;transition:filter .15s}
+.go:hover,.go:focus-visible{filter:brightness(1.1)}.go span{transition:transform .15s}.go:hover span{transform:translateX(4px)}
+.mods{display:flex;flex-wrap:wrap;gap:.4rem}
+.mods a{font:400 .78rem var(--mono);border:1px solid var(--line);border-radius:7px;padding:.25rem .6rem;color:var(--text)}
+.mods a:hover{border-color:var(--a);color:var(--a)}.mods em{font-style:normal;color:var(--dim);margin-left:.3rem}
+footer{margin:3.5rem 0 2rem;padding-top:1.2rem;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:.6rem;font:400 .78rem var(--mono);color:var(--dim)}
+:focus-visible{outline:2px solid var(--js);outline-offset:2px}
+@media(max-width:560px){kbd{display:none}.hero{padding-top:2rem}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <a class="brand" href="index.html"><b>&lt;</b>practicals<i>/&gt;</i></a>
+    <button class="btn-ghost" id="theme" aria-label="Toggle light and dark theme">◐ Theme</button>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">Sai University — School of Computing &amp; Data Science</div>
+    <h1><span class="h">HTML</span> <span class="c">CSS</span> <span class="j">JavaScript</span><br><span class="tag">// practical programs</span></h1>
+    <p class="sub">Every practical in one place. Browse a section below, or search across <b id="total">all</b> programs, and jump straight to the one you need.</p>
+    <label class="search"><span>&gt;</span>
+      <input id="q" type="search" placeholder="Search programs — e.g. calculator, flexbox, login, crud" autocomplete="off" aria-label="Search programs">
+      <kbd>/</kbd></label>
+    <div class="filters" id="filters" role="group" aria-label="Filter by section"></div>
+    <div id="results" aria-live="polite"></div>
+  </header>
+
+  <main>
+    <h2>Assignment sections</h2>
+    <div class="grid g3">
+      <article class="card html"><div class="top"><span>01 / html</span><span class="num" data-n="html"></span></div>
+        <h3>HTML Programs</h3><p>Page structure, lists, tables, forms, media and semantic elements.</p>
+        <pre>&lt;<b>h1</b>&gt;Hello&lt;/<b>h1</b>&gt;
+&lt;<b>a</b> href="#"&gt;Link&lt;/<b>a</b>&gt;</pre>
+        <a class="go" href="html/index.html">View HTML Programs <span>→</span></a></article>
+      <article class="card css"><div class="top"><span>02 / css</span><span class="num" data-n="css"></span></div>
+        <h3>CSS Programs</h3><p>Selectors, box model, flexbox, grid, animation and complete responsive layouts.</p>
+        <pre><b>.card</b> {
+  display: <b>grid</b>; gap: 1rem;
+}</pre>
+        <a class="go" href="css-35-topics/index.html">View CSS Programs <span>→</span></a></article>
+      <article class="card js"><div class="top"><span>03 / javascript</span><span class="num" data-n="js"></span></div>
+        <h3>JavaScript Programs</h3><p>DOM, events, forms &amp; validation, browser objects, web storage and mini projects.</p>
+        <pre><b>btn</b>.addEventListener(
+  'click', () =&gt; run());</pre>
+        <a class="go" href="javascript/index.html">View JavaScript Programs <span>→</span></a></article>
+    </div>
+
+    <h2>Extended labs</h2>
+    <div class="grid g2">
+      <article class="card lab"><div class="top"><span>04 / js-lab</span><span class="num" data-n="jslab"></span></div>
+        <h3>Complete JavaScript Lab</h3><p>The full lab, organised into modules. Jump straight into any module:</p>
+        <div class="mods" id="labMods"></div>
+        <a class="go" href="Complete-JavaScript-Lab/index.html">Open JavaScript Lab <span>→</span></a></article>
+      <article class="card be"><div class="top"><span>05 / backend</span><span class="num" data-n="backend"></span></div>
+        <h3>Backend Lab</h3><p>Supabase and Node.js / Express experiments with a built-in code viewer — browse, read and copy any file.</p>
+        <div class="mods" id="beMods"></div>
+        <a class="go" href="viewer.html">Browse Backend Lab <span>→</span></a></article>
+    </div>
+  </main>
+
+  <footer><span>Open any page directly in your browser — no server needed.</span><span>Tip: press <kbd>/</kbd> to search</span></footer>
+</div>
+
+<script src="assets/manifest.js"></script>
+<script>
+(function(){
+'use strict';
+const M = window.MANIFEST || [];
+const SEC = {html:['HTML','--html'],css:['CSS','--css'],js:['JavaScript','--js'],jslab:['JS Lab','--lab'],backend:['Backend','--be']};
+const $ = (s, r=document) => r.querySelector(s);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---- theme (remembered; falls back silently if storage is blocked) ---- */
+const root = document.documentElement;
+try{ const t = localStorage.getItem('theme');
+  root.dataset.theme = t || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'); }catch(e){}
+$('#theme').onclick = () => { root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  try{ localStorage.setItem('theme', root.dataset.theme); }catch(e){} };
+
+/* ---- counts ---- */
+const count = {}; M.forEach(p => count[p.s] = (count[p.s]||0) + 1);
+$('#total').textContent = M.length;
+document.querySelectorAll('[data-n]').forEach(el => el.textContent = (count[el.dataset.n]||0) + ' programs');
+
+/* ---- module chips ---- */
+const mods = {};
+M.filter(p => p.s === 'jslab').forEach(p => { const f = p.u.split('/')[1]; mods[f] = (mods[f]||0) + 1; });
+$('#labMods').innerHTML = Object.keys(mods).map(f =>
+  `<a href="Complete-JavaScript-Lab/${f}/index.html">${esc(f.replace(/^\d+-/,'').replace(/-/g,' '))}<em>${mods[f]}</em></a>`).join('');
+$('#beMods').innerHTML = [['supabase','Supabase'],['nodejs-backend','Node.js']].map(([k,n]) =>
+  `<a href="viewer.html?lab=${k}">${n}<em>${M.filter(p => p.s==='backend' && p.g.startsWith(n)).length}</em></a>`).join('');
+
+/* ---- search ---- */
+const q = $('#q'), out = $('#results'), fbox = $('#filters');
+let sec = 'all', sel = -1;
+fbox.innerHTML = [['all','All']].concat(Object.entries(SEC).map(([k,v]) => [k,v[0]]))
+  .map(([k,n]) => `<button class="chip" data-s="${k}" aria-pressed="${k==='all'}">${n}</button>`).join('');
+fbox.onclick = e => { const b = e.target.closest('.chip'); if(!b) return; sec = b.dataset.s;
+  fbox.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c === b)); run(); };
+
+function hl(text, terms){ let h = esc(text);
+  terms.forEach(t => { h = h.replace(new RegExp('(' + esc(t).replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')','ig'), '<mark>$1</mark>'); }); return h; }
+
+function run(){
+  const terms = q.value.toLowerCase().split(/\s+/).filter(Boolean);
+  if(!terms.length && sec === 'all'){ out.className = ''; return; }
+  let hits = M.filter(p => (sec === 'all' || p.s === sec) &&
+    terms.every(t => (p.t + ' ' + p.g + ' ' + SEC[p.s][0]).toLowerCase().includes(t)));
+  if(terms.length) hits.sort((a,b) => (b.t.toLowerCase().startsWith(terms[0]) - a.t.toLowerCase().startsWith(terms[0])));
+  sel = -1; out.className = 'on';
+  const shown = hits.slice(0, 60);
+  out.innerHTML = `<div class="meta">${hits.length} result${hits.length===1?'':'s'}${hits.length>60?' · showing first 60 — refine your search':''}</div>` +
+    (shown.length ? '<ul>' + shown.map(p => `<li><a href="${p.u}"><span class="t">${hl(p.t, terms)}<span class="g">${esc(p.g)}</span></span>
+      <span class="badge" style="background:var(${SEC[p.s][1]})">${SEC[p.s][0]}</span></a></li>`).join('') + '</ul>'
+      : '<div class="empty">No programs match. Try a shorter keyword like “form” or “table”.</div>');
+}
+q.addEventListener('input', run);
+q.addEventListener('keydown', e => {
+  const links = [...out.querySelectorAll('li a')];
+  if(e.key === 'ArrowDown' || e.key === 'ArrowUp'){ e.preventDefault(); if(!links.length) return;
+    sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length;
+    links.forEach((l,i) => l.classList.toggle('sel', i === sel)); links[sel].scrollIntoView({block:'nearest'}); }
+  else if(e.key === 'Enter' && links.length){ links[Math.max(sel,0)].click(); }
+  else if(e.key === 'Escape'){ q.value = ''; sec = 'all'; fbox.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c.dataset.s === 'all')); run(); q.blur(); }
+});
+document.addEventListener('keydown', e => {
+  if(e.key === '/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)){ e.preventDefault(); q.focus(); q.select(); } });
+})();
+</script>
+</body>
+</html>

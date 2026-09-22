@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+  Project: File Upload Application using Supabase Storage
+  Features: login, drag & drop upload with progress-style status, image gallery preview, download, copy public link, delete.
+  Setup   : 07-storage/00-storage-setup-and-policies.sql (creates the public "uploads" bucket + policies). URL + anon key below.
+  Files are stored as  uploads/<user_id>/<timestamp>-<name>  so each user manages only his own folder.
+-->
+<html>
+<head>
+  <meta charset="utf-8"><title>File Upload App</title>
+  <style>
+    body{font-family:Segoe UI,Arial;background:#f1f5f9;margin:0}.wrap{max-width:900px;margin:24px auto;padding:0 14px}
+    .card{background:#fff;border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 1px 6px #0001}
+    #drop{border:2px dashed #94a3b8;border-radius:10px;padding:34px;text-align:center;color:#64748b;cursor:pointer}#drop.over{background:#e0f2fe;border-color:#0284c7}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}.item{border:1px solid #e2e8f0;border-radius:8px;padding:8px;background:#fafafa;word-break:break-all;font-size:13px}
+    .item img{width:100%;height:110px;object-fit:cover;border-radius:6px}.ic{height:110px;display:flex;align-items:center;justify-content:center;font-size:40px;background:#e2e8f0;border-radius:6px}
+    button{padding:6px 10px;border:0;border-radius:6px;background:#2563eb;color:#fff;cursor:pointer;margin:3px 2px 0 0;font-size:12px}button.d{background:#dc2626}
+    input[type=email],input[type=password]{padding:8px;margin:4px}#msg{color:#0f766e;min-height:20px}
+  </style>
+</head>
+<body><div class="wrap">
+  <h1>File Upload App</h1><p id="msg"></p>
+  <div class="card" id="authBox"><input id="email" type="email" placeholder="email"><input id="password" type="password" placeholder="password">
+    <button onclick="auth(false)">Login</button><button onclick="auth(true)">Register</button></div>
+  <div id="appBox" style="display:none">
+    <div class="card"><b id="who"></b> <button class="d" onclick="sb.auth.signOut()">Logout</button></div>
+    <div class="card"><div id="drop" onclick="pick.click()">Drag &amp; drop files here or click to choose (max 5 MB: png, jpg, webp, pdf, txt)</div>
+      <input type="file" id="pick" multiple hidden></div>
+    <div class="card"><h3>My files</h3><div class="grid" id="grid"></div></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
+  const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const BUCKET = 'uploads', MAX = 5 * 1024 * 1024, $ = (i) => document.getElementById(i); let user = null;
+  const say = (t) => ($('msg').textContent = t || '');
+  const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+
+  async function auth(reg) {
+    const c = { email: $('email').value, password: $('password').value };
+    const { error } = reg ? await sb.auth.signUp(c) : await sb.auth.signInWithPassword(c); say(error ? error.message : reg ? 'Registered - login now' : '');
+  }
+  async function uploadFiles(files) {
+    for (const f of files) {
+      if (f.size > MAX) { say(`${f.name}: larger than 5 MB`); continue; }
+      say(`Uploading ${f.name}...`);
+      const path = `${user.id}/${Date.now()}-${f.name.replace(/[^\w.-]/g, '_')}`;
+      const { error } = await sb.storage.from(BUCKET).upload(path, f, { contentType: f.type, upsert: false });
+      say(error ? `${f.name}: ${error.message}` : `${f.name} uploaded`);
+    }
+    load();
+  }
+  async function load() {
+    const { data, error } = await sb.storage.from(BUCKET).list(user.id, { sortBy: { column: 'created_at', order: 'desc' } });
+    if (error) return say(error.message);
+    $('grid').innerHTML = '';
+    data.filter((f) => f.name !== '.emptyFolderPlaceholder').forEach((f) => {
+      const path = `${user.id}/${f.name}`, url = sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+      const isImg = /\.(png|jpe?g|webp|gif)$/i.test(f.name), div = document.createElement('div'); div.className = 'item';
+      div.innerHTML = (isImg ? `<img src="${url}">` : '<div class="ic">&#128196;</div>') + `<div>${esc(f.name.replace(/^\d+-/, ''))}</div><small>${((f.metadata?.size || 0) / 1024).toFixed(1)} KB</small><br>
+        <a href="${url}" target="_blank"><button>Open</button></a><button data-a="copy">Copy link</button><button data-a="del" class="d">Delete</button>`;
+      div.querySelector('[data-a=copy]').onclick = () => { navigator.clipboard.writeText(url); say('Link copied'); };
+      div.querySelector('[data-a=del]').onclick = async () => { if (confirm('Delete file?')) { await sb.storage.from(BUCKET).remove([path]); load(); } };
+      $('grid').appendChild(div);
+    });
+    if (!$('grid').children.length) $('grid').textContent = 'No files yet.';
+  }
+  const drop = $('drop');
+  drop.ondragover = (e) => { e.preventDefault(); drop.classList.add('over'); }; drop.ondragleave = () => drop.classList.remove('over');
+  drop.ondrop = (e) => { e.preventDefault(); drop.classList.remove('over'); uploadFiles(e.dataTransfer.files); };
+  $('pick').onchange = (e) => { uploadFiles(e.target.files); e.target.value = ''; };
+  sb.auth.onAuthStateChange((_e, s) => {
+    user = s?.user || null; $('authBox').style.display = user ? 'none' : 'block'; $('appBox').style.display = user ? 'block' : 'none';
+    if (user) { $('who').textContent = user.email; load(); }
+  });
+</script></body></html>

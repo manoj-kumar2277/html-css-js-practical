@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>165. ML Prediction Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --bg:#12111a; --panel:#1b1a26; --panel-alt:#221f30; --line:#322f42;
+  --text:#eae7f2; --text-dim:#9c96ad; --amber:#e8a33d; --teal:#4fd1c5; --coral:#ff6b7a;
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.6;}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.01em;margin:0 0 .4em;}
+code,.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:var(--teal);}
+.wrap{max-width:820px;margin:0 auto;padding:2.5rem 1.4rem 4rem;}
+.topbar{display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--text-dim);margin-bottom:1.6rem;}
+.topbar a{color:var(--text-dim);text-decoration:none;}
+.topbar a:hover{color:var(--teal);}
+.eyebrow{color:var(--amber);font-family:'IBM Plex Mono',monospace;font-size:.85rem;}
+h1.title{font-size:clamp(1.5rem,3vw,2.1rem);margin-top:.2rem;}
+p.desc{color:var(--text-dim);max-width:62ch;margin-bottom:1.6rem;}
+.demo{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.6rem;margin-bottom:2rem;overflow:hidden;}
+.navrow{display:flex;justify-content:space-between;gap:1rem;margin-top:2.4rem;border-top:1px solid var(--line);padding-top:1.4rem;}
+.navrow a{font-family:'IBM Plex Mono',monospace;font-size:.85rem;background:var(--panel-alt);border:1px solid var(--line);padding:.5rem .9rem;border-radius:8px;text-decoration:none;color:var(--text);}
+.navrow a:hover{border-color:var(--teal);color:var(--teal);}
+.navrow a.disabled{opacity:.35;pointer-events:none;}
+
+
+   .mini-card{background:var(--panel-alt);border-radius:12px;padding:1.1rem;max-width:300px;}
+   .mini-card .pred-big{font-size:1.4rem;font-weight:700;color:var(--amber);font-family:'Space Grotesk',sans-serif;}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a href="../index.html">&larr; Home</a>
+    <span>CSS Practical Programs</span>
+    <a href="index.html">All CSS topics</a>
+  </div>
+  <span class="eyebrow">Topic 165</span>
+  <h1 class="title">ML Prediction Dashboard</h1>
+  <p class="desc">A dashboard widget showing a model's live prediction output.</p>
+  <div class="demo">
+    <div class="mini-card">
+      <div style="font-size:.78rem;color:var(--text-dim);">Predicted churn risk</div>
+      <div class="pred-big">Medium (42%)</div>
+    </div>
+
+  </div>
+  <div class="navrow">
+    <a href="164.html">&larr; 164</a>
+    <a href="166.html">166 &rarr;</a>
+  </div>
+</div>
+</body>
+</html>

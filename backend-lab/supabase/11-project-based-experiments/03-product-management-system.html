@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+  Project: Product Management System using Supabase
+  Features: CRUD, category filter, price/stock validation, low-stock highlight, inventory value, CSV export.
+  Setup   : schema.sql (open lab policies) + URL/anon key below.  (After RBAC SQL, only admins can write.)
+-->
+<html>
+<head>
+  <meta charset="utf-8"><title>Product Management</title>
+  <style>
+    body{font-family:Segoe UI,Arial;background:#f8fafc;margin:0}.wrap{max-width:980px;margin:24px auto;padding:0 14px}
+    .cards{display:flex;gap:12px;margin-bottom:14px}.stat{flex:1;background:#fff;padding:14px;border-radius:10px;box-shadow:0 1px 5px #0001}.stat b{font-size:22px;display:block;color:#0f766e}
+    .card{background:#fff;padding:14px;border-radius:10px;box-shadow:0 1px 5px #0001;margin-bottom:14px}
+    input,select{padding:8px;margin:3px;border:1px solid #cbd5e1;border-radius:6px}button{padding:8px 12px;border:0;border-radius:6px;background:#0f766e;color:#fff;cursor:pointer}
+    button.d{background:#dc2626}button.g{background:#64748b}table{width:100%;border-collapse:collapse}th,td{padding:8px;border-bottom:1px solid #e5e7eb;text-align:left}
+    .low{background:#fef2f2}#err{color:#dc2626}
+  </style>
+</head>
+<body><div class="wrap">
+  <h1>Product Management</h1>
+  <div class="cards"><div class="stat">Products<b id="sCount">0</b></div><div class="stat">Inventory value<b id="sValue">0</b></div><div class="stat">Low stock (&lt;5)<b id="sLow">0</b></div></div>
+  <div class="card">
+    <input id="name" placeholder="Product name"><input id="category" placeholder="Category" list="cats"><datalist id="cats"></datalist>
+    <input id="price" type="number" step="0.01" min="0" placeholder="Price"><input id="stock" type="number" min="0" placeholder="Stock">
+    <button onclick="save()" id="saveBtn">Add product</button> <button class="g" onclick="clearForm()">Clear</button><p id="err"></p>
+  </div>
+  <div class="card">
+    <select id="cat" onchange="render()"><option value="">All categories</option></select>
+    <input id="q" placeholder="Search..." oninput="render()"> <button class="g" onclick="exportCsv()">Export CSV</button>
+    <table><thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
+  const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const $ = (i) => document.getElementById(i); let products = [], editId = null;
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  const money = (n) => Number(n).toLocaleString('en-IN', { style: 'currency', currency: 'INR' });
+
+  async function load() {
+    const { data, error } = await sb.from('products').select('*').order('id');
+    if (error) return ($('err').textContent = error.message);
+    products = data; refreshFilters(); render();
+  }
+  function refreshFilters() {
+    const cats = [...new Set(products.map((p) => p.category).filter(Boolean))].sort(), cur = $('cat').value;
+    $('cat').innerHTML = '<option value="">All categories</option>' + cats.map((c) => `<option ${c === cur ? 'selected' : ''}>${esc(c)}</option>`).join('');
+    $('cats').innerHTML = cats.map((c) => `<option value="${esc(c)}">`).join('');
+  }
+  function render() {
+    const q = $('q').value.toLowerCase(), c = $('cat').value;
+    const list = products.filter((p) => (!c || p.category === c) && p.name.toLowerCase().includes(q));
+    $('rows').innerHTML = list.map((p) => `<tr class="${p.stock < 5 ? 'low' : ''}"><td>${esc(p.name)}</td><td>${esc(p.category)}</td><td>${money(p.price)}</td><td>${p.stock}</td>
+      <td><button onclick="edit(${p.id})">Edit</button> <button class="d" onclick="del(${p.id})">Delete</button></td></tr>`).join('');
+    $('sCount').textContent = products.length; $('sLow').textContent = products.filter((p) => p.stock < 5).length;
+    $('sValue').textContent = money(products.reduce((s, p) => s + p.price * p.stock, 0));
+  }
+  async function save() {
+    const p = { name: $('name').value.trim(), category: $('category').value.trim() || null, price: parseFloat($('price').value), stock: parseInt($('stock').value, 10) };
+    if (p.name.length < 2) return ($('err').textContent = 'Name is too short');
+    if (!(p.price >= 0)) return ($('err').textContent = 'Price must be 0 or more');
+    if (!Number.isInteger(p.stock) || p.stock < 0) return ($('err').textContent = 'Stock must be a whole number >= 0');
+    const { error } = editId ? await sb.from('products').update(p).eq('id', editId) : await sb.from('products').insert(p);
+    if (error) return ($('err').textContent = error.message);
+    clearForm(); load();
+  }
+  function edit(id) {
+    const p = products.find((x) => x.id === id); editId = id; $('saveBtn').textContent = 'Update product';
+    $('name').value = p.name; $('category').value = p.category ?? ''; $('price').value = p.price; $('stock').value = p.stock;
+  }
+  async function del(id) { if (confirm('Delete this product?')) { const { error } = await sb.from('products').delete().eq('id', id); if (error) alert(error.message); load(); } }
+  function clearForm() { editId = null; $('saveBtn').textContent = 'Add product'; $('err').textContent = ''; ['name','category','price','stock'].forEach((k) => ($(k).value = '')); }
+  function exportCsv() {
+    const rows = [['id','name','category','price','stock'], ...products.map((p) => [p.id, p.name, p.category ?? '', p.price, p.stock])];
+    const csv = rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\n');
+    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = 'products.csv'; a.click();
+  }
+  load();
+</script></body></html>

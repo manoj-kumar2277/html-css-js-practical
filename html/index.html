@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Fundamentals — 15 Programs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#12111a; --panel:#1b1a26; --panel-alt:#221f30; --line:#322f42;
+  --text:#eae7f2; --text-dim:#9c96ad; --amber:#e8a33d; --teal:#4fd1c5; --coral:#ff6b7a;
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.6;}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.01em;margin:0 0 .4em;}
+code,.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:var(--coral);}
+.wrap{max-width:1100px;margin:0 auto;padding:2.5rem 1.4rem 4rem;}
+.topbar{display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--text-dim);margin-bottom:1.6rem;}
+.topbar a{color:var(--text-dim);text-decoration:none;}
+.topbar a:hover{color:var(--coral);}
+.eyebrow{color:var(--coral);font-family:'IBM Plex Mono',monospace;font-size:.85rem;}
+h1.title{font-size:clamp(1.5rem,3vw,2.1rem);margin-top:.2rem;margin-bottom:.3rem;}
+p.desc{color:var(--text-dim);max-width:62ch;margin-bottom:1.6rem;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;}
+.card{display:flex;flex-direction:column;gap:.4rem;background:var(--panel);border:1px solid var(--line);
+  border-radius:12px;padding:1rem 1.1rem;text-decoration:none;color:var(--text);}
+.card:hover{border-color:var(--coral);}
+.card .n{font-family:'IBM Plex Mono',monospace;color:var(--coral);font-size:.8rem;}
+.card .t{font-size:.92rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a href="../index.html">&larr; Home</a>
+    <span>html/</span>
+  </div>
+  <span class="eyebrow">15 standalone pages</span>
+  <h1 class="title">HTML Fundamentals</h1>
+  <p class="desc">Every HTML topic from the brief as its own runnable page. Open any one on its own, or click through here.</p>
+  <div class="grid">
+<a class="card" href="1.html"><span class="n">01</span><span class="t">Basic HTML Page</span></a>
+<a class="card" href="2.html"><span class="n">02</span><span class="t">HTML Lists</span></a>
+<a class="card" href="3.html"><span class="n">03</span><span class="t">HTML Tables</span></a>
+<a class="card" href="4.html"><span class="n">04</span><span class="t">Images and Hyperlinks</span></a>
+<a class="card" href="5.html"><span class="n">05</span><span class="t">Student Registration Form</span></a>
+<a class="card" href="6.html"><span class="n">06</span><span class="t">Audio and Video</span></a>
+<a class="card" href="7.html"><span class="n">07</span><span class="t">Frames and Iframes</span></a>
+<a class="card" href="8.html"><span class="n">08</span><span class="t">Semantic Elements</span></a>
+<a class="card" href="9.html"><span class="n">09</span><span class="t">HTML5 Input Types</span></a>
+<a class="card" href="10.html"><span class="n">10</span><span class="t">College Timetable</span></a>
+<a class="card" href="11.html"><span class="n">11</span><span class="t">Internal and External CSS</span></a>
+<a class="card" href="12.html"><span class="n">12</span><span class="t">CSS Selectors and Box Model</span></a>
+<a class="card" href="13.html"><span class="n">13</span><span class="t">Responsive Page with Media Queries</span></a>
+<a class="card" href="14.html"><span class="n">14</span><span class="t">Bootstrap Components</span></a>
+<a class="card" href="15.html"><span class="n">15</span><span class="t">Portfolio Page</span></a>
+  </div>
+</div>
+</body>
+</html>

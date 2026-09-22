@@ -1,0 +1,95 @@
+{
+  "info": { "name": "Supabase REST API - students", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
+  "variable": [
+    { "key": "baseUrl", "value": "https://YOUR-PROJECT-REF.supabase.co" },
+    { "key": "anonKey", "value": "YOUR-ANON-KEY" },
+    { "key": "accessToken", "value": "" },
+    { "key": "studentId", "value": "" },
+    { "key": "email", "value": "student1@example.com" },
+    { "key": "password", "value": "Passw0rd!123" }
+  ],
+  "item": [
+    {
+      "name": "Auth - login (get access token)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "apikey", "value": "{{anonKey}}" }, { "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\"email\":\"{{email}}\",\"password\":\"{{password}}\"}" },
+        "url": "{{baseUrl}}/auth/v1/token?grant_type=password"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Login 200', () => pm.response.to.have.status(200));",
+        "pm.collectionVariables.set('accessToken', pm.response.json().access_token);"
+      ] } }]
+    },
+    {
+      "name": "GET students",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "apikey", "value": "{{anonKey}}" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+        "url": "{{baseUrl}}/rest/v1/students?select=*&order=id.desc&limit=5"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('200 OK', () => pm.response.to.have.status(200));",
+        "pm.test('Array returned', () => pm.expect(pm.response.json()).to.be.an('array'));"
+      ] } }]
+    },
+    {
+      "name": "POST student",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "apikey", "value": "{{anonKey}}" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Content-Type", "value": "application/json" }, { "key": "Prefer", "value": "return=representation" }
+        ],
+        "body": { "mode": "raw", "raw": "{\"name\":\"Postman User\",\"email\":\"pm{{$timestamp}}@example.com\",\"course\":\"CSE\",\"age\":21}" },
+        "url": "{{baseUrl}}/rest/v1/students"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('201 Created', () => pm.response.to.have.status(201));",
+        "pm.collectionVariables.set('studentId', pm.response.json()[0].id);"
+      ] } }]
+    },
+    {
+      "name": "PATCH student",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "apikey", "value": "{{anonKey}}" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Content-Type", "value": "application/json" }, { "key": "Prefer", "value": "return=representation" }
+        ],
+        "body": { "mode": "raw", "raw": "{\"age\":22}" },
+        "url": "{{baseUrl}}/rest/v1/students?id=eq.{{studentId}}"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('200 OK', () => pm.response.to.have.status(200));",
+        "pm.test('age updated', () => pm.expect(pm.response.json()[0].age).to.eql(22));"
+      ] } }]
+    },
+    {
+      "name": "DELETE student",
+      "request": {
+        "method": "DELETE",
+        "header": [{ "key": "apikey", "value": "{{anonKey}}" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" }],
+        "url": "{{baseUrl}}/rest/v1/students?id=eq.{{studentId}}"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('204 No Content', () => pm.response.to.have.status(204));"
+      ] } }]
+    },
+    {
+      "name": "GET with count (pagination)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "apikey", "value": "{{anonKey}}" }, { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+          { "key": "Prefer", "value": "count=exact" }
+        ],
+        "url": "{{baseUrl}}/rest/v1/students?select=id&limit=3&offset=0"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Content-Range header present', () => pm.expect(pm.response.headers.get('Content-Range')).to.be.ok);"
+      ] } }]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+  Project: Student Management System using Supabase
+  Features: add / edit / delete, search, sort, pagination, form validation.
+  Setup   : run 00-setup/schema.sql (open lab policies), put your URL + anon key below, open in a browser.
+-->
+<html>
+<head>
+  <meta charset="utf-8"><title>Student Management System</title>
+  <style>
+    *{box-sizing:border-box}body{font-family:Segoe UI,Arial;background:#f3f5fa;margin:0}
+    .wrap{max-width:960px;margin:24px auto;padding:0 14px}h1{color:#1e3a8a}
+    .card{background:#fff;border-radius:10px;padding:16px;box-shadow:0 1px 6px #0001;margin-bottom:16px}
+    .row{display:flex;gap:8px;flex-wrap:wrap}input,select{padding:8px;border:1px solid #cbd5e1;border-radius:6px;flex:1;min-width:120px}
+    button{padding:8px 14px;border:0;border-radius:6px;background:#2563eb;color:#fff;cursor:pointer}button.g{background:#64748b}button.d{background:#dc2626}
+    table{width:100%;border-collapse:collapse}th,td{padding:8px;border-bottom:1px solid #e2e8f0;text-align:left}th{cursor:pointer;background:#eff6ff}
+    #err{color:#dc2626;min-height:20px}.pager{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+  </style>
+</head>
+<body><div class="wrap">
+  <h1>Student Management System</h1>
+  <div class="card">
+    <h3 id="formTitle">Add student</h3>
+    <div class="row">
+      <input id="name" placeholder="Full name"><input id="email" type="email" placeholder="Email">
+      <input id="course" placeholder="Course"><input id="age" type="number" placeholder="Age" min="15">
+    </div>
+    <p id="err"></p>
+    <button onclick="save()">Save</button> <button class="g" onclick="resetForm()">Clear</button>
+  </div>
+  <div class="card">
+    <div class="row"><input id="search" placeholder="Search by name..." oninput="page=0;load()">
+      <select id="filterCourse" onchange="page=0;load()"><option value="">All courses</option></select></div>
+    <table><thead><tr>
+      <th onclick="sortBy('id')">ID</th><th onclick="sortBy('name')">Name</th><th onclick="sortBy('email')">Email</th>
+      <th onclick="sortBy('course')">Course</th><th onclick="sortBy('age')">Age</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+    <div class="pager"><button class="g" onclick="go(-1)">&laquo; Prev</button><span id="info"></span><button class="g" onclick="go(1)">Next &raquo;</button></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
+  const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const $ = (i) => document.getElementById(i);
+  const PAGE_SIZE = 5; let page = 0, sort = 'id', asc = true, editId = null, cache = [];
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+
+  async function load() {
+    let q = sb.from('students').select('*', { count: 'exact' });
+    if ($('search').value) q = q.ilike('name', `%${$('search').value}%`);
+    if ($('filterCourse').value) q = q.eq('course', $('filterCourse').value);
+    const { data, count, error } = await q.order(sort, { ascending: asc }).range(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE - 1);
+    if (error) return ($('err').textContent = error.message);
+    cache = data;
+    $('rows').innerHTML = data.map((s) => `<tr><td>${s.id}</td><td>${esc(s.name)}</td><td>${esc(s.email)}</td><td>${esc(s.course)}</td><td>${s.age ?? ''}</td>
+      <td><button onclick="edit(${s.id})">Edit</button> <button class="d" onclick="del(${s.id})">Delete</button></td></tr>`).join('');
+    $('info').textContent = `Page ${page + 1} of ${Math.max(1, Math.ceil(count / PAGE_SIZE))} (${count} students)`;
+    window.total = count;
+  }
+  async function loadCourses() {
+    const { data } = await sb.from('students').select('course');
+    const list = [...new Set((data || []).map((r) => r.course))].sort();
+    $('filterCourse').innerHTML = '<option value="">All courses</option>' + list.map((c) => `<option>${esc(c)}</option>`).join('');
+  }
+  function validate(s) {
+    if (s.name.length < 2) return 'Name must have at least 2 characters';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.email)) return 'Enter a valid email';
+    if (!s.course) return 'Course is required';
+    if (!Number.isInteger(s.age) || s.age < 15) return 'Age must be 15 or more';
+    return null;
+  }
+  async function save() {
+    const s = { name: $('name').value.trim(), email: $('email').value.trim(), course: $('course').value.trim(), age: parseInt($('age').value, 10) };
+    const v = validate(s); if (v) return ($('err').textContent = v);
+    const { error } = editId ? await sb.from('students').update(s).eq('id', editId) : await sb.from('students').insert(s);
+    if (error) return ($('err').textContent = error.message);
+    resetForm(); await load(); loadCourses();
+  }
+  function edit(id) {
+    const s = cache.find((x) => x.id === id); editId = id; $('formTitle').textContent = 'Edit student #' + id;
+    ['name', 'email', 'course', 'age'].forEach((k) => ($(k).value = s[k] ?? ''));
+  }
+  async function del(id) { if (!confirm('Delete student #' + id + '?')) return; await sb.from('students').delete().eq('id', id); load(); loadCourses(); }
+  function resetForm() { editId = null; $('formTitle').textContent = 'Add student'; $('err').textContent = ''; ['name','email','course','age'].forEach((k) => ($(k).value = '')); }
+  function sortBy(c) { asc = sort === c ? !asc : true; sort = c; load(); }
+  function go(d) { const max = Math.ceil((window.total || 0) / PAGE_SIZE) - 1; page = Math.min(Math.max(0, page + d), Math.max(0, max)); load(); }
+  load(); loadCourses();
+</script></body></html>

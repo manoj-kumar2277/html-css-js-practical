@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>13. Responsive Page with Media Queries</title>
+<style>
+  * { box-sizing:border-box; }
+  body { font-family: 'Segoe UI', sans-serif; margin:0; background:#edf2fb; color:#22223b; }
+  header { background:#4a4e69; color:white; padding:20px; text-align:center; }
+
+  .grid {
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:16px;
+    padding:20px;
+  }
+
+  .card {
+    background:#9a8c98;
+    color:white;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+  }
+
+  /* Tablet: 2 columns */
+  @media (max-width: 768px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    header h1 { font-size:1.4em; }
+  }
+
+  /* Mobile: 1 column, stacked */
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+    .card { font-size:0.95em; }
+    header { padding:14px; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <h1>Responsive Layout Demo</h1>
+    <p>Resize the browser window to see the layout change!</p>
+  </header>
+
+  <div class="grid">
+    <div class="card">Card 1</div>
+    <div class="card">Card 2</div>
+    <div class="card">Card 3</div>
+    <div class="card">Card 4</div>
+    <div class="card">Card 5</div>
+    <div class="card">Card 6</div>
+  </div>
+
+  <nav style="margin-top:30px; padding-top:15px; border-top:2px solid #0f6674;">
+    <a href="../index.html" style="margin-right:15px; color:#0f6674; font-weight:bold; text-decoration:none;">🏠 Home</a>
+    <a href="index.html" style="color:#0f6674; font-weight:bold; text-decoration:none;">⬅ Back to HTML Programs</a>
+  </nav>
+
+</body>
+</html>

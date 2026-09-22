@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forms &amp; Validation — Index</title>
+<style>
+  :root{--bg:#0f1220;--panel:#171b2e;--panel2:#1d2238;--border:#2a2f4a;--text:#e8e9f3;--muted:#9aa1c3;--accent:#7c8cff;--accent2:#4fd6c2;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:radial-gradient(circle at top left,#1a1f3a,#0b0d17 60%);color:var(--text);min-height:100vh;padding:40px 20px 60px;}
+  .wrap{max-width:960px;margin:0 auto;}
+  header{text-align:center;margin-bottom:34px;}
+  header .badge{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0d17;font-weight:700;padding:5px 16px;border-radius:20px;font-size:13px;margin-bottom:14px;}
+  header h1{font-size:30px;margin:6px 0 8px;background:linear-gradient(135deg,#fff,#b8bfff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  header p{color:var(--muted);font-size:15px;margin:0;}
+  .stats{display:flex;gap:14px;justify-content:center;margin-top:20px;flex-wrap:wrap;}
+  .stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 22px;text-align:center;min-width:110px;}
+  .stat b{display:block;font-size:22px;color:var(--accent2);}
+  .stat span{font-size:12px;color:var(--muted);}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));gap:12px;margin-top:32px;}
+  .prog-card{display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--border);border-radius:12px;padding:14px;text-decoration:none;color:var(--text);transition:.15s;font-size:13.5px;}
+  .prog-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 20px rgba(124,140,255,.25);}
+  .qnum{background:#232848;color:var(--accent2);font-weight:700;font-size:11px;padding:3px 8px;border-radius:6px;flex-shrink:0;}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:50px;}
+  a.back{display:block;text-align:center;color:var(--muted);text-decoration:none;font-size:13px;margin-top:6px;}
+  a.back:hover{color:var(--text);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="badge">Forms Module</span>
+    <h1>Forms &amp; Validation</h1>
+    <p>Real-world form validation patterns — registration, login, password strength, and live inline errors.</p>
+    <div class="stats">
+      <div class="stat"><b>7</b><span>Programs</span></div>
+      <div class="stat"><b>100%</b><span>Interactive</span></div>
+      <div class="stat"><b>0</b><span>Dependencies</span></div>
+    </div>
+  </header>
+  <div class="grid">
+      <a class="prog-card" href="01-student-registration-form-with-validation.html">
+        <span class="qnum">1</span>
+        <span class="ptitle">Student Registration Form with Validation</span>
+      </a>
+      <a class="prog-card" href="02-login-form-with-username-and-password-validation.html">
+        <span class="qnum">2</span>
+        <span class="ptitle">Login Form with Username and Password Validation</span>
+      </a>
+      <a class="prog-card" href="03-password-strength-checker.html">
+        <span class="qnum">3</span>
+        <span class="ptitle">Password Strength Checker</span>
+      </a>
+      <a class="prog-card" href="04-signup-form-with-password-confirmation.html">
+        <span class="qnum">4</span>
+        <span class="ptitle">Signup Form with Password Confirmation</span>
+      </a>
+      <a class="prog-card" href="05-feedback-form-with-validation.html">
+        <span class="qnum">5</span>
+        <span class="ptitle">Feedback Form with Validation</span>
+      </a>
+      <a class="prog-card" href="06-college-admission-form-with-validation.html">
+        <span class="qnum">6</span>
+        <span class="ptitle">College Admission Form with Validation</span>
+      </a>
+      <a class="prog-card" href="07-display-validation-errors-dynamically-no-reload.html">
+        <span class="qnum">7</span>
+        <span class="ptitle">Display Validation Errors Dynamically (No Reload)</span>
+      </a>
+  </div>
+  <a class="back" href="../index.html">&larr; Back to Master Index</a>
+  <footer>SAI University · Section Sec-06 · Forms &amp; Validation</footer>
+</div>
+</body>
+</html>

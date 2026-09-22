@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>5. Student Registration Form</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background:linear-gradient(135deg,#5f0f40,#9a031e); min-height:100vh; margin:0; display:flex; justify-content:center; align-items:center; padding:20px; }
+  form { background:#ffffff; padding:30px 36px; border-radius:14px; width:420px; max-width:100%; box-shadow:0 10px 30px rgba(0,0,0,.3); }
+  h1 { color:#5f0f40; text-align:center; font-size:1.5em; margin-top:0; }
+  label { display:block; margin:14px 0 4px; font-weight:bold; color:#333; }
+  input, select, textarea { width:100%; padding:8px 10px; border:2px solid #cbd5e1; border-radius:6px; box-sizing:border-box; font-size:0.95em; }
+  input:focus, select:focus, textarea:focus { border-color:#9a031e; outline:none; }
+  .radio-group label, .checkbox-group label { display:inline-block; font-weight:normal; margin-right:16px; }
+  fieldset { margin-top:16px; border:2px solid #fcbf49; border-radius:8px; }
+  legend { color:#9a031e; font-weight:bold; padding:0 6px; }
+  button { margin-top:20px; width:100%; padding:12px; background:#9a031e; color:white; border:none; border-radius:8px; font-size:1em; font-weight:bold; cursor:pointer; }
+  button:hover { background:#5f0f40; }
+</style>
+</head>
+<body>
+
+<form action="#" method="post">
+  <h1>Student Registration Form</h1>
+
+  <label for="name">Full Name</label>
+  <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+  <label for="regno">Registration Number</label>
+  <input type="text" id="regno" name="regno" placeholder="e.g. SAI2024001" required>
+
+  <label for="email">Email</label>
+  <input type="email" id="email" name="email" placeholder="you@example.com" required>
+
+  <label for="dob">Date of Birth</label>
+  <input type="date" id="dob" name="dob">
+
+  <fieldset class="radio-group">
+    <legend>Gender</legend>
+    <label><input type="radio" name="gender" value="male"> Male</label>
+    <label><input type="radio" name="gender" value="female"> Female</label>
+    <label><input type="radio" name="gender" value="other"> Other</label>
+  </fieldset>
+
+  <label for="course">Course</label>
+  <select id="course" name="course">
+    <option value="cs">Computer Science</option>
+    <option value="ds">Data Science</option>
+    <option value="ai">Applied AI</option>
+  </select>
+
+  <fieldset class="checkbox-group">
+    <legend>Hobbies</legend>
+    <label><input type="checkbox" name="hobby" value="reading"> Reading</label>
+    <label><input type="checkbox" name="hobby" value="sports"> Sports</label>
+    <label><input type="checkbox" name="hobby" value="coding"> Coding</label>
+  </fieldset>
+
+  <label for="address">Address</label>
+  <textarea id="address" name="address" rows="3" placeholder="Your address"></textarea>
+
+  <button type="submit">Register</button>
+</form>
+
+  <nav style="margin-top:30px; padding-top:15px; border-top:2px solid #0f6674;">
+    <a href="../index.html" style="margin-right:15px; color:#0f6674; font-weight:bold; text-decoration:none;">🏠 Home</a>
+    <a href="index.html" style="color:#0f6674; font-weight:bold; text-decoration:none;">⬅ Back to HTML Programs</a>
+  </nav>
+
+</body>
+</html>

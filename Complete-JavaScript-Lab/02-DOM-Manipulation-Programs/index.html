@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOM Manipulation Lab — Index</title>
+<style>
+  :root{
+    --bg:#0f1220; --panel:#171b2e; --panel2:#1d2238; --border:#2a2f4a;
+    --text:#e8e9f3; --muted:#9aa1c3; --accent:#7c8cff; --accent2:#4fd6c2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(circle at top left,#1a1f3a,#0b0d17 60%);
+    color:var(--text); min-height:100vh; padding:40px 20px 60px;
+  }
+  .wrap{max-width:900px;margin:0 auto;}
+  header{text-align:center;margin-bottom:34px;}
+  header .badge{
+    display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#0b0d17;font-weight:700;padding:5px 16px;border-radius:20px;font-size:13px;margin-bottom:14px;
+  }
+  header h1{font-size:32px;margin:6px 0 8px;background:linear-gradient(135deg,#fff,#b8bfff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  header p{color:var(--muted);font-size:15px;margin:0;}
+  .stats{display:flex;gap:14px;justify-content:center;margin-top:20px;flex-wrap:wrap;}
+  .stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 22px;text-align:center;min-width:110px;}
+  .stat b{display:block;font-size:22px;color:var(--accent2);}
+  .stat span{font-size:12px;color:var(--muted);}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));gap:12px;margin-top:32px;}
+  .prog-card{
+    display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,var(--panel),var(--panel2));
+    border:1px solid var(--border);border-radius:12px;padding:14px;text-decoration:none;color:var(--text);
+    transition:.15s; font-size:14px;
+  }
+  .prog-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 20px rgba(124,140,255,.25);}
+  .qnum{background:#232848;color:var(--accent2);font-weight:700;font-size:11px;padding:3px 8px;border-radius:6px;flex-shrink:0;}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:50px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="badge">DOM Manipulation Lab</span>
+    <h1>DOM Manipulation Programs</h1>
+    <p>Fully working, interactive demos of core DOM manipulation techniques in vanilla JavaScript.</p>
+    <div class="stats">
+      <div class="stat"><b>15</b><span>Programs</span></div>
+      <div class="stat"><b>100%</b><span>Interactive</span></div>
+      <div class="stat"><b>0</b><span>Dependencies</span></div>
+    </div>
+  </header>
+  <div class="grid">
+      <a class="prog-card" href="01-add-new-elements-dynamically.html">
+        <span class="qnum">Q1</span>
+        <span class="ptitle">Add New Elements Dynamically</span>
+      </a>
+      <a class="prog-card" href="02-remove-html-elements-dynamically.html">
+        <span class="qnum">Q2</span>
+        <span class="ptitle">Remove HTML Elements Dynamically</span>
+      </a>
+      <a class="prog-card" href="03-change-css-styles-using-javascript.html">
+        <span class="qnum">Q3</span>
+        <span class="ptitle">Change CSS Styles Using JavaScript</span>
+      </a>
+      <a class="prog-card" href="04-change-multiple-html-elements-simultaneously.html">
+        <span class="qnum">Q4</span>
+        <span class="ptitle">Change Multiple HTML Elements Simultaneously</span>
+      </a>
+      <a class="prog-card" href="05-getelementbyid-and-getelementsbyclassname.html">
+        <span class="qnum">Q5</span>
+        <span class="ptitle">getElementById() and getElementsByClassName()</span>
+      </a>
+      <a class="prog-card" href="06-queryselector-and-queryselectorall.html">
+        <span class="qnum">Q6</span>
+        <span class="ptitle">querySelector() and querySelectorAll()</span>
+      </a>
+      <a class="prog-card" href="07-create-and-remove-css-classes-dynamically.html">
+        <span class="qnum">Q7</span>
+        <span class="ptitle">Create and Remove CSS Classes Dynamically</span>
+      </a>
+      <a class="prog-card" href="08-create-a-dynamic-table-using-javascript.html">
+        <span class="qnum">Q8</span>
+        <span class="ptitle">Create a Dynamic Table Using JavaScript</span>
+      </a>
+      <a class="prog-card" href="09-add-and-delete-rows-from-a-table.html">
+        <span class="qnum">Q9</span>
+        <span class="ptitle">Add and Delete Rows from a Table</span>
+      </a>
+      <a class="prog-card" href="10-searchfilter-table-records.html">
+        <span class="qnum">Q10</span>
+        <span class="ptitle">Search/Filter Table Records</span>
+      </a>
+      <a class="prog-card" href="11-live-character-counter-for-a-textarea.html">
+        <span class="qnum">Q11</span>
+        <span class="ptitle">Live Character Counter for a Textarea</span>
+      </a>
+      <a class="prog-card" href="12-password-showhide-feature.html">
+        <span class="qnum">Q12</span>
+        <span class="ptitle">Password Show/Hide Feature</span>
+      </a>
+      <a class="prog-card" href="13-create-a-dynamic-dropdown-list.html">
+        <span class="qnum">Q13</span>
+        <span class="ptitle">Create a Dynamic Dropdown List</span>
+      </a>
+      <a class="prog-card" href="14-dependent-dropdown---country-to-state-to-city.html">
+        <span class="qnum">Q14</span>
+        <span class="ptitle">Dependent Dropdown — Country → State → City</span>
+      </a>
+      <a class="prog-card" href="15-image-slideshow-carousel.html">
+        <span class="qnum">Q15</span>
+        <span class="ptitle">Image Slideshow / Carousel</span>
+      </a>
+  </div>
+  <footer>SAI University · Section Sec-06 · DOM Manipulation Lab</footer>
+</div>
+</body>
+</html>

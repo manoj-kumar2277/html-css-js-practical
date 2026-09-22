@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hello World - JavaScript Program</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 30px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    p.description {
+      color: #555;
+      margin-bottom: 20px;
+    }
+    #output {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2980b9;
+      margin: 20px 0;
+      min-height: 30px;
+    }
+    button {
+      background: #2980b9;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #1c5d8a;
+    }
+    nav {
+      margin-top: 20px;
+    }
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #2980b9;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Hello World</h1>
+    <p class="description">
+      A simple JavaScript program that displays "Hello World" on the page.
+    </p>
+
+    <div id="output"></div>
+    <button onclick="showHelloWorld()">Show Message</button>
+
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="index.html">JavaScript Programs</a>
+    </nav>
+  </div>
+
+  <script>
+    // Function to display Hello World in the output div
+    function showHelloWorld() {
+      const outputDiv = document.getElementById("output");
+      outputDiv.textContent = "Hello World";
+    }
+  </script>
+
+</body>
+</html>

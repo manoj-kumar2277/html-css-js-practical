@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--
+  Project: Realtime Chat Application using Supabase
+  Features: login required, live messages, online users (Presence), typing indicator (Broadcast), delete own messages.
+  Setup   : schema.sql + 08-realtime/01-enable-supabase-realtime.sql + 06-authorization/06-authenticated-user-policies.sql
+            (policy: only authenticated users can post as themselves). URL + anon key below.
+-->
+<html>
+<head>
+  <meta charset="utf-8"><title>Realtime Chat</title>
+  <style>
+    body{font-family:Segoe UI,Arial;background:#e2e8f0;margin:0;display:flex;justify-content:center}
+    .app{width:760px;height:92vh;margin-top:2vh;background:#fff;border-radius:12px;display:flex;box-shadow:0 3px 14px #0003;overflow:hidden}
+    aside{width:200px;background:#1e293b;color:#fff;padding:14px}aside h4{margin:0 0 10px}aside li{list-style:none;margin:6px 0;font-size:14px}aside li:before{content:"\25CF ";color:#22c55e}
+    main{flex:1;display:flex;flex-direction:column}#log{flex:1;overflow:auto;padding:12px}
+    .m{margin:8px 0;padding:8px 12px;background:#f1f5f9;border-radius:12px;max-width:75%}.me{background:#dbeafe;margin-left:auto}
+    .m small{display:block;color:#64748b;font-size:11px}.m .x{float:right;cursor:pointer;color:#dc2626;margin-left:8px}
+    #typing{height:20px;padding:0 12px;color:#64748b;font-size:12px}footer{display:flex;padding:10px;gap:8px;border-top:1px solid #e2e8f0}footer input{flex:1;padding:10px}
+    button{padding:10px 16px;border:0;border-radius:6px;background:#2563eb;color:#fff;cursor:pointer}
+    #login{margin:auto;text-align:center}#login input{display:block;margin:8px auto;padding:10px;width:240px}
+  </style>
+</head>
+<body>
+<div class="app" id="login-wrap" style="justify-content:center"><div id="login">
+  <h2>Join the chat</h2><input id="email" type="email" placeholder="email"><input id="password" type="password" placeholder="password">
+  <button onclick="auth(false)">Login</button> <button style="background:#64748b" onclick="auth(true)">Register</button><p id="err" style="color:#dc2626"></p>
+</div></div>
+
+<div class="app" id="chat-wrap" style="display:none">
+  <aside><h4>Online now</h4><ul id="online" style="padding:0"></ul><button style="margin-top:20px;background:#ef4444" onclick="sb.auth.signOut()">Logout</button></aside>
+  <main><div id="log"></div><div id="typing"></div>
+    <footer><input id="text" placeholder="Message..." oninput="typing()" onkeydown="if(event.key==='Enter')send()"><button onclick="send()">Send</button></footer></main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
+  const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const $ = (i) => document.getElementById(i); let me = null, room = null, typingTimer;
+
+  async function auth(register) {
+    const creds = { email: $('email').value, password: $('password').value };
+    const { error } = register ? await sb.auth.signUp(creds) : await sb.auth.signInWithPassword(creds);
+    $('err').textContent = error ? error.message : (register ? 'Registered - now click Login' : '');
+  }
+  const nameOf = () => me.email.split('@')[0];
+
+  function addMessage(m) {
+    if ($('m' + m.id)) return;
+    const d = document.createElement('div'); d.id = 'm' + m.id; d.className = 'm' + (m.user_id === me.id ? ' me' : '');
+    const head = document.createElement('small'); head.textContent = `${m.username} - ${new Date(m.created_at).toLocaleTimeString()}`;
+    if (m.user_id === me.id) { const x = document.createElement('span'); x.className = 'x'; x.textContent = 'x'; x.onclick = () => sb.from('messages').delete().eq('id', m.id); head.appendChild(x); }
+    d.appendChild(head); d.appendChild(document.createTextNode(m.content));
+    $('log').appendChild(d); $('log').scrollTop = $('log').scrollHeight;
+  }
+
+  async function send() {
+    const content = $('text').value.trim(); if (!content) return; $('text').value = '';
+    const { error } = await sb.from('messages').insert({ content, username: nameOf(), user_id: me.id });
+    if (error) alert(error.message);
+  }
+  function typing() { room?.send({ type: 'broadcast', event: 'typing', payload: { user: nameOf() } }); }
+
+  async function start(user) {
+    me = user; $('login-wrap').style.display = 'none'; $('chat-wrap').style.display = 'flex';
+    const { data } = await sb.from('messages').select('*').order('created_at', { ascending: false }).limit(50);
+    $('log').innerHTML = ''; (data || []).reverse().forEach(addMessage);
+
+    room = sb.channel('room-1', { config: { presence: { key: me.id } } })
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages' }, (p) => addMessage(p.new))
+      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'messages' }, (p) => $('m' + p.old.id)?.remove())
+      .on('presence', { event: 'sync' }, () => {
+        const names = Object.values(room.presenceState()).flat().map((u) => u.name);
+        $('online').innerHTML = [...new Set(names)].map((n) => `<li>${n.replace(/[<>&]/g, '')}</li>`).join('');
+      })
+      .on('broadcast', { event: 'typing' }, ({ payload }) => {
+        if (payload.user === nameOf()) return;
+        $('typing').textContent = payload.user + ' is typing...'; clearTimeout(typingTimer); typingTimer = setTimeout(() => ($('typing').textContent = ''), 1500);
+      })
+      .subscribe(async (s) => { if (s === 'SUBSCRIBED') await room.track({ name: nameOf() }); });
+  }
+  function stop() { if (room) sb.removeChannel(room); room = me = null; $('login-wrap').style.display = 'flex'; $('chat-wrap').style.display = 'none'; }
+
+  sb.auth.onAuthStateChange((_e, session) => (session ? (!me && start(session.user)) : stop()));
+</script></body></html>

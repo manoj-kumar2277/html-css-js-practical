@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+  Experiment: Implement image/file upload with authentication.
+  Prereq : 00-storage-setup-and-policies.sql, registered user. Fill the two constants below and open the file.
+  Behaviour: only logged-in users see the upload form; files are stored at  private-files/<user_id>/<name>
+             (private bucket, visible only to the owner) and uploaded avatars go to the public "uploads" bucket.
+-->
+<html>
+<head>
+  <meta charset="utf-8"><title>Authenticated Upload</title>
+  <style>
+    body{font-family:Arial;max-width:640px;margin:30px auto;padding:0 12px}
+    input,button{padding:8px;margin:4px 0} .card{border:1px solid #ddd;padding:12px;border-radius:8px;margin-top:14px}
+    img{max-width:120px;border-radius:6px;margin:4px} #msg{color:#b00}
+  </style>
+</head>
+<body>
+<h2>Authenticated file upload</h2><p id="msg"></p>
+
+<div id="authBox" class="card">
+  <input id="email" type="email" placeholder="email"><br><input id="password" type="password" placeholder="password"><br>
+  <button onclick="signIn()">Login</button> <button onclick="signUp()">Register</button>
+</div>
+
+<div id="appBox" class="card" style="display:none">
+  <p>Signed in as <b id="who"></b> <button onclick="sb.auth.signOut()">Logout</button></p>
+  <input type="file" id="file" accept="image/*,.pdf,.txt"> <button onclick="upload()">Upload</button>
+  <h4>My private files</h4><div id="list"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
+  const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const $ = (id) => document.getElementById(id); let user = null;
+  const say = (t) => ($('msg').textContent = t || '');
+
+  async function signIn(){ const {error}=await sb.auth.signInWithPassword({email:$('email').value,password:$('password').value}); say(error?.message); }
+  async function signUp(){ const {error}=await sb.auth.signUp({email:$('email').value,password:$('password').value}); say(error?error.message:'Registered - now login'); }
+
+  async function upload(){
+    const f = $('file').files[0]; if(!f) return say('Choose a file first');
+    if (f.size > 5*1024*1024) return say('Max size is 5 MB');
+    const path = `${user.id}/${Date.now()}-${f.name.replace(/[^\w.-]/g,'_')}`;
+    const { error } = await sb.storage.from('private-files').upload(path, f, { contentType: f.type });
+    say(error ? error.message : 'Uploaded!'); loadFiles();
+  }
+
+  async function loadFiles(){
+    const { data, error } = await sb.storage.from('private-files').list(user.id, { sortBy:{column:'created_at',order:'desc'} });
+    if (error) return say(error.message);
+    $('list').innerHTML = '';
+    for (const f of data) {
+      const { data: s } = await sb.storage.from('private-files').createSignedUrl(`${user.id}/${f.name}`, 300);
+      const row = document.createElement('div');
+      row.innerHTML = `<a href="${s.signedUrl}" target="_blank">${f.name}</a> <button>Delete</button>`;
+      row.querySelector('button').onclick = async () => { await sb.storage.from('private-files').remove([`${user.id}/${f.name}`]); loadFiles(); };
+      $('list').appendChild(row);
+    }
+  }
+
+  sb.auth.onAuthStateChange((_e, session) => {
+    user = session?.user || null;
+    $('authBox').style.display = user ? 'none' : 'block'; $('appBox').style.display = user ? 'block' : 'none';
+    if (user) { $('who').textContent = user.email; loadFiles(); }
+  });
+</script>
+</body>
+</html>

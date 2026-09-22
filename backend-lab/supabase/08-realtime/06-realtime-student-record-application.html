@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+  Experiment: Create a realtime student record application.
+  Open this page in two tabs / two computers: adding, editing or deleting a student in one appears instantly in the other.
+  Prereq: schema.sql + 01-enable-supabase-realtime.sql. Fill in the two constants below.
+-->
+<html>
+<head>
+  <meta charset="utf-8"><title>Realtime Students</title>
+  <style>
+    body{font-family:Arial;max-width:820px;margin:30px auto;padding:0 12px}
+    input{padding:6px;margin:3px}button{padding:6px 12px;cursor:pointer}
+    table{width:100%;border-collapse:collapse;margin-top:14px}th,td{border:1px solid #ccc;padding:6px;text-align:left}th{background:#eef}
+    .flash{animation:f 1.2s}@keyframes f{from{background:#fef08a}to{background:transparent}}#live{color:green}
+  </style>
+</head>
+<body>
+<h2>Student Records <small id="live">(connecting...)</small></h2>
+<div>
+  <input id="name" placeholder="name"><input id="email" placeholder="email"><input id="course" placeholder="course"><input id="age" type="number" placeholder="age">
+  <button onclick="add()">Add</button>
+</div>
+<table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Course</th><th>Age</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
+  const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const $ = (id) => document.getElementById(id);
+
+  function rowHtml(s) {
+    const esc = (v) => String(v ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    return `<td>${s.id}</td><td>${esc(s.name)}</td><td>${esc(s.email)}</td><td>${esc(s.course)}</td><td>${s.age ?? ''}</td>
+            <td><button onclick="edit(${s.id})">Edit</button> <button onclick="del(${s.id})">Delete</button></td>`;
+  }
+  function upsertRow(s) {
+    let tr = $('r' + s.id);
+    if (!tr) { tr = document.createElement('tr'); tr.id = 'r' + s.id; $('rows').appendChild(tr); }
+    tr.innerHTML = rowHtml(s); tr.className = ''; void tr.offsetWidth; tr.className = 'flash';
+  }
+
+  async function add() {
+    const { error } = await sb.from('students').insert({ name: $('name').value, email: $('email').value, course: $('course').value, age: +$('age').value || null });
+    if (error) alert(error.message);
+  }
+  async function edit(id) {
+    const name = prompt('New name?'); if (!name) return;
+    const { error } = await sb.from('students').update({ name }).eq('id', id); if (error) alert(error.message);
+  }
+  async function del(id) { if (confirm('Delete?')) { const { error } = await sb.from('students').delete().eq('id', id); if (error) alert(error.message); } }
+
+  (async () => {
+    const { data } = await sb.from('students').select('*').order('id'); (data || []).forEach(upsertRow);
+    sb.channel('students-live')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'students' }, (p) => upsertRow(p.new))
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'students' }, (p) => upsertRow(p.new))
+      .on('postgres_changes', { event: 'DELETE', schema: 'public', table: 'students' }, (p) => $('r' + p.old.id)?.remove())
+      .subscribe((s) => ($('live').textContent = s === 'SUBSCRIBED' ? '(live)' : '(' + s.toLowerCase() + ')'));
+  })();
+</script>
+</body>
+</html>

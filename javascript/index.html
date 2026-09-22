@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Programs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#12111a; --panel:#1b1a26; --panel-alt:#221f30; --line:#322f42;
+  --text:#eae7f2; --text-dim:#9c96ad; --amber:#e8a33d; --teal:#4fd1c5; --coral:#ff6b7a;
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.6;}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.01em;margin:0 0 .4em;}
+code,.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:var(--teal);}
+.wrap{max-width:1100px;margin:0 auto;padding:2.5rem 1.4rem 4rem;}
+.topbar{display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--text-dim);margin-bottom:1.6rem;}
+.topbar a{color:var(--text-dim);text-decoration:none;}
+.topbar a:hover{color:var(--teal);}
+.eyebrow{color:var(--teal);font-family:'IBM Plex Mono',monospace;font-size:.85rem;}
+h1.title{font-size:clamp(1.5rem,3vw,2.1rem);margin-top:.2rem;margin-bottom:.3rem;}
+p.desc{color:var(--text-dim);max-width:62ch;margin-bottom:1.6rem;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;}
+.card{display:flex;flex-direction:column;gap:.4rem;background:var(--panel);border:1px solid var(--line);
+  border-radius:12px;padding:1rem 1.1rem;text-decoration:none;color:var(--text);}
+.card:hover{border-color:var(--teal);}
+.card .n{font-family:'IBM Plex Mono',monospace;color:var(--teal);font-size:.8rem;}
+.card .t{font-size:.92rem;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a href="../index.html">&larr; Home</a>
+    <span>javascript/</span>
+  </div>
+  <span class="eyebrow">105 standalone pages (more in progress)</span>
+  <h1 class="title">JavaScript Programs</h1>
+  <p class="desc">Every JS topic from the brief as its own runnable page: Core Basics (01-20), Forms &amp; Validation (F01-F40), Browser Objects (B1-B20), Web Storage (W1-W25). Open any one on its own, or click through here.</p>
+  <div class="grid">
+<a class="card" href="hello-world.html"><span class="n">01</span><span class="t">Hello World</span></a>
+<a class="card" href="arithmetic-operations.html"><span class="n">02</span><span class="t">Arithmetic Operations</span></a>
+<a class="card" href="largest-of-three.html"><span class="n">03</span><span class="t">Largest of Three Numbers</span></a>
+<a class="card" href="even-odd.html"><span class="n">04</span><span class="t">Even or Odd Check</span></a>
+<a class="card" href="positive-negative-zero.html"><span class="n">05</span><span class="t">Positive, Negative, or Zero</span></a>
+<a class="card" href="factorial.html"><span class="n">06</span><span class="t">Factorial of a Number</span></a>
+<a class="card" href="fibonacci-series.html"><span class="n">07</span><span class="t">Fibonacci Series</span></a>
+<a class="card" href="prime-check.html"><span class="n">08</span><span class="t">Prime Number Check</span></a>
+<a class="card" href="palindrome-number.html"><span class="n">09</span><span class="t">Palindrome Number Check</span></a>
+<a class="card" href="reverse-number.html"><span class="n">10</span><span class="t">Reverse a Number</span></a>
+<a class="card" href="sum-of-digits.html"><span class="n">11</span><span class="t">Sum of Digits</span></a>
+<a class="card" href="array-largest-smallest.html"><span class="n">12</span><span class="t">Largest and Smallest in Array</span></a>
+<a class="card" href="array-sort.html"><span class="n">13</span><span class="t">Sort an Array</span></a>
+<a class="card" href="array-sum-average.html"><span class="n">14</span><span class="t">Sum and Average of Array</span></a>
+<a class="card" href="js-functions.html"><span class="n">15</span><span class="t">JavaScript Functions</span></a>
+<a class="card" href="arrow-functions.html"><span class="n">16</span><span class="t">Arrow Functions</span></a>
+<a class="card" href="string-methods.html"><span class="n">17</span><span class="t">String Methods Demo</span></a>
+<a class="card" href="array-methods.html"><span class="n">18</span><span class="t">Array Methods Demo</span></a>
+<a class="card" href="js-objects.html"><span class="n">19</span><span class="t">JavaScript Objects</span></a>
+<a class="card" href="date-math-objects.html"><span class="n">20</span><span class="t">Date and Math Objects</span></a>
+  <a class="card" href="student-registration-form.html"><span class="n">F01</span><span class="t">Student Registration Form & Validation</span></a>
+<a class="card" href="login-form-validation.html"><span class="n">F02</span><span class="t">Login Form with Username & Password Validation</span></a>
+<a class="card" href="validate-name-alphabets.html"><span class="n">F03</span><span class="t">Validate a Name Field (Alphabets Only)</span></a>
+<a class="card" href="validate-age-field.html"><span class="n">F04</span><span class="t">Validate an Age Field</span></a>
+<a class="card" href="validate-mobile-number.html"><span class="n">F05</span><span class="t">Validate a Mobile Phone Number</span></a>
+<a class="card" href="validate-email.html"><span class="n">F06</span><span class="t">Validate an Email Address</span></a>
+<a class="card" href="validate-password-min-length.html"><span class="n">F07</span><span class="t">Validate a Password (Minimum Length)</span></a>
+<a class="card" href="strong-password-validator.html"><span class="n">F08</span><span class="t">Strong Password Validator</span></a>
+<a class="card" href="validate-password-confirm.html"><span class="n">F09</span><span class="t">Validate Password & Confirm Password</span></a>
+<a class="card" href="validate-date-of-birth.html"><span class="n">F10</span><span class="t">Validate a Date of Birth Field</span></a>
+<a class="card" href="validate-gender-selection.html"><span class="n">F11</span><span class="t">Validate a Gender Selection</span></a>
+<a class="card" href="validate-radio-buttons.html"><span class="n">F12</span><span class="t">Validate Radio Buttons</span></a>
+<a class="card" href="validate-checkbox-selection.html"><span class="n">F13</span><span class="t">Validate Checkbox Selection</span></a>
+<a class="card" href="validate-dropdown.html"><span class="n">F14</span><span class="t">Validate a Dropdown / Select Box</span></a>
+<a class="card" href="validate-textarea.html"><span class="n">F15</span><span class="t">Validate a Textarea</span></a>
+<a class="card" href="required-field-validation.html"><span class="n">F16</span><span class="t">Form with Required-Field Validation</span></a>
+<a class="card" href="error-messages-beside-fields.html"><span class="n">F17</span><span class="t">Display Error Messages Beside Fields</span></a>
+<a class="card" href="success-message-after-submission.html"><span class="n">F18</span><span class="t">Display a Success Message After Submission</span></a>
+<a class="card" href="prevent-submission-on-fail.html"><span class="n">F19</span><span class="t">Prevent Form Submission When Validation Fails</span></a>
+<a class="card" href="validate-form-regex.html"><span class="n">F20</span><span class="t">Validate a Form Using Regular Expressions</span></a>
+<a class="card" href="validate-email-regex.html"><span class="n">F21</span><span class="t">Validate an Email Using a Regular Expression</span></a>
+<a class="card" href="validate-phone-regex.html"><span class="n">F22</span><span class="t">Validate a Phone Number Using a Regular Expression</span></a>
+<a class="card" href="validate-password-regex.html"><span class="n">F23</span><span class="t">Validate a Password Using a Regular Expression</span></a>
+<a class="card" href="realtime-form-validation.html"><span class="n">F24</span><span class="t">Real-Time Form Validation System</span></a>
+<a class="card" href="validate-input-change-focus-blur.html"><span class="n">F25</span><span class="t">Validate Fields Using input/change/focus/blur Events</span></a>
+<a class="card" href="password-strength-meter.html"><span class="n">F26</span><span class="t">Password Strength Meter</span></a>
+<a class="card" href="show-hide-password.html"><span class="n">F27</span><span class="t">Show / Hide Password Option</span></a>
+<a class="card" href="registration-password-confirmation.html"><span class="n">F28</span><span class="t">Registration Form with Password Confirmation</span></a>
+<a class="card" href="college-admission-form.html"><span class="n">F29</span><span class="t">College Admission Form with Complete Validation</span></a>
+<a class="card" href="job-application-form.html"><span class="n">F30</span><span class="t">Job Application Form with Validation</span></a>
+<a class="card" href="feedback-form-validation.html"><span class="n">F31</span><span class="t">Feedback Form with Validation</span></a>
+<a class="card" href="contact-form-validation.html"><span class="n">F32</span><span class="t">Contact Form with Validation</span></a>
+<a class="card" href="multi-step-registration-form.html"><span class="n">F33</span><span class="t">Multi-Step Registration Form</span></a>
+<a class="card" href="form-preview-before-submission.html"><span class="n">F34</span><span class="t">Form that Previews Entered Info Before Submission</span></a>
+<a class="card" href="calculate-age-from-dob.html"><span class="n">F35</span><span class="t">Form that Calculates Age from Date of Birth</span></a>
+<a class="card" href="marks-entry-grade-calculator.html"><span class="n">F36</span><span class="t">Marks Entry Form: Total, Average & Grade</span></a>
+<a class="card" href="employee-salary-calculator.html"><span class="n">F37</span><span class="t">Employee Salary Form & Salary Details</span></a>
+<a class="card" href="shopping-order-total.html"><span class="n">F38</span><span class="t">Shopping Order Form & Total Price</span></a>
+<a class="card" href="dynamic-fields-based-on-selection.html"><span class="n">F39</span><span class="t">Form with Dynamic Fields Based on Selection</span></a>
+<a class="card" href="validate-no-page-reload.html"><span class="n">F40</span><span class="t">Form that Validates Without Page Reload</span></a>
+
+  <a class="card" href="window-object-demo.html"><span class="n">B1</span><span class="t">Demonstrate the Window Object</span></a>
+<a class="card" href="alert-confirm-prompt.html"><span class="n">B2</span><span class="t">Demonstrate alert(), confirm() & prompt()</span></a>
+<a class="card" href="settimeout-demo.html"><span class="n">B3</span><span class="t">Program Using setTimeout()</span></a>
+<a class="card" href="setinterval-demo.html"><span class="n">B4</span><span class="t">Program Using setInterval()</span></a>
+<a class="card" href="digital-clock-setinterval.html"><span class="n">B5</span><span class="t">Digital Clock Using setInterval()</span></a>
+<a class="card" href="countdown-timer.html"><span class="n">B6</span><span class="t">Countdown Timer</span></a>
+<a class="card" href="stopwatch-browser.html"><span class="n">B7</span><span class="t">Stopwatch</span></a>
+<a class="card" href="location-object-demo.html"><span class="n">B8</span><span class="t">Demonstrate the Location Object</span></a>
+<a class="card" href="redirect-button.html"><span class="n">B9</span><span class="t">Button to Redirect to Another Webpage</span></a>
+<a class="card" href="display-current-url.html"><span class="n">B10</span><span class="t">Display the Current Webpage URL</span></a>
+<a class="card" href="history-object-demo.html"><span class="n">B11</span><span class="t">Demonstrate the History Object</span></a>
+<a class="card" href="back-forward-reload-buttons.html"><span class="n">B12</span><span class="t">Buttons for Back, Forward & Reload</span></a>
+<a class="card" href="navigator-object-demo.html"><span class="n">B13</span><span class="t">Demonstrate the Navigator Object</span></a>
+<a class="card" href="display-browser-info.html"><span class="n">B14</span><span class="t">Display Browser Information</span></a>
+<a class="card" href="screen-width-height.html"><span class="n">B15</span><span class="t">Display Screen Width & Height</span></a>
+<a class="card" href="online-offline-detect.html"><span class="n">B16</span><span class="t">Detect Online or Offline</span></a>
+<a class="card" href="display-browser-language.html"><span class="n">B17</span><span class="t">Display the Current Browser Language</span></a>
+<a class="card" href="browser-geolocation.html"><span class="n">B18</span><span class="t">Demonstrate Browser Geolocation</span></a>
+<a class="card" href="current-coordinates-geolocation.html"><span class="n">B19</span><span class="t">Display Current Geographical Coordinates</span></a>
+<a class="card" href="online-offline-update-webpage.html"><span class="n">B20</span><span class="t">Webpage that Updates on Online/Offline Change</span></a>
+<a class="card" href="store-username-localstorage.html"><span class="n">W1</span><span class="t">Store a Username Using localStorage</span></a>
+<a class="card" href="retrieve-display-localstorage.html"><span class="n">W2</span><span class="t">Retrieve & Display Data from localStorage</span></a>
+<a class="card" href="update-localstorage-data.html"><span class="n">W3</span><span class="t">Update Data Stored in localStorage</span></a>
+<a class="card" href="delete-localstorage-item.html"><span class="n">W4</span><span class="t">Delete an Item from localStorage</span></a>
+<a class="card" href="clear-all-localstorage.html"><span class="n">W5</span><span class="t">Clear All localStorage Data</span></a>
+<a class="card" href="store-multiple-values.html"><span class="n">W6</span><span class="t">Store Multiple Values Using localStorage</span></a>
+<a class="card" href="store-array-json.html"><span class="n">W7</span><span class="t">Store an Array in localStorage Using JSON</span></a>
+<a class="card" href="store-object-localstorage.html"><span class="n">W8</span><span class="t">Store a JavaScript Object in localStorage</span></a>
+<a class="card" href="student-record-system.html"><span class="n">W9</span><span class="t">Student Record System Using localStorage</span></a>
+<a class="card" href="todo-list-localstorage.html"><span class="n">W10</span><span class="t">To-Do List Using localStorage</span></a>
+<a class="card" href="notes-app-localstorage.html"><span class="n">W11</span><span class="t">Notes Application Using localStorage</span></a>
+<a class="card" href="shopping-cart-localstorage.html"><span class="n">W12</span><span class="t">Shopping Cart Using localStorage</span></a>
+<a class="card" href="login-preference-localstorage.html"><span class="n">W13</span><span class="t">Login Preference System Using localStorage</span></a>
+<a class="card" href="theme-switcher-localstorage.html"><span class="n">W14</span><span class="t">Dark/Light Theme Switcher Using localStorage</span></a>
+<a class="card" href="font-size-preference-localstorage.html"><span class="n">W15</span><span class="t">Save Preferred Font Size Using localStorage</span></a>
+<a class="card" href="recently-viewed-items.html"><span class="n">W16</span><span class="t">Recently Viewed Items Feature</span></a>
+<a class="card" href="visitor-counter-storage.html"><span class="n">W17</span><span class="t">Visitor Counter Using Browser Storage</span></a>
+<a class="card" href="compare-localstorage-sessionstorage.html"><span class="n">W18</span><span class="t">Compare localStorage & sessionStorage</span></a>
+<a class="card" href="temp-form-data-sessionstorage.html"><span class="n">W19</span><span class="t">Temporary Form Data Using sessionStorage</span></a>
+<a class="card" href="multipage-form-sessionstorage.html"><span class="n">W20</span><span class="t">Multi-Page Form Using sessionStorage</span></a>
+<a class="card" href="autosave-form-localstorage.html"><span class="n">W21</span><span class="t">Save Form Data Automatically Using localStorage</span></a>
+<a class="card" href="restore-form-after-refresh.html"><span class="n">W22</span><span class="t">Restore Form Data After Refreshing</span></a>
+<a class="card" href="cart-persists-refresh.html"><span class="n">W23</span><span class="t">Shopping Cart that Persists After Refresh</span></a>
+<a class="card" href="student-marks-database.html"><span class="n">W24</span><span class="t">Student Marks Database Using localStorage</span></a>
+<a class="card" href="crud-localstorage-app.html"><span class="n">W25</span><span class="t">CRUD Application Using localStorage</span></a>
+
+  <a class="card" href="dom-add-element-dynamically.html"><span class="n">D01</span><span class="t">Add New Elements Dynamically</span></a>
+<a class="card" href="dom-remove-element-dynamically.html"><span class="n">D02</span><span class="t">Remove HTML Elements Dynamically</span></a>
+<a class="card" href="dom-change-css-styles.html"><span class="n">D03</span><span class="t">Change CSS Styles Using JavaScript</span></a>
+<a class="card" href="dom-change-multiple-elements.html"><span class="n">D04</span><span class="t">Change Multiple HTML Elements Simultaneously</span></a>
+<a class="card" href="dom-getelementbyid-getelementsbyclassname.html"><span class="n">D05</span><span class="t">getElementById() & getElementsByClassName()</span></a>
+<a class="card" href="dom-queryselector-queryselectorall.html"><span class="n">D06</span><span class="t">querySelector() & querySelectorAll()</span></a>
+<a class="card" href="dom-add-remove-css-class.html"><span class="n">D07</span><span class="t">Create and Remove CSS Classes Dynamically</span></a>
+<a class="card" href="dom-toggle-css-class.html"><span class="n">D08</span><span class="t">Toggle a CSS Class Using JavaScript</span></a>
+<a class="card" href="dom-change-attributes.html"><span class="n">D09</span><span class="t">Change Attributes of an Element Dynamically</span></a>
+<a class="card" href="dom-dynamic-unordered-list.html"><span class="n">D10</span><span class="t">Dynamic Unordered List from an Array</span></a>
+<a class="card" href="dom-dynamic-ordered-list-input.html"><span class="n">D11</span><span class="t">Dynamic Ordered List from User Input</span></a>
+<a class="card" href="dom-dynamic-student-table.html"><span class="n">D12</span><span class="t">Dynamic Student Table Using JavaScript</span></a>
+<a class="card" href="dom-add-delete-table-rows.html"><span class="n">D13</span><span class="t">Add and Delete Rows from a Table</span></a>
+<a class="card" href="dom-search-filter-table.html"><span class="n">D14</span><span class="t">Search / Filter Table Records</span></a>
+<a class="card" href="dom-live-character-counter.html"><span class="n">D15</span><span class="t">Live Character Counter for a Textarea</span></a>
+<a class="card" href="dom-live-word-counter.html"><span class="n">D16</span><span class="t">Live Word Counter</span></a>
+<a class="card" href="dom-dependent-dropdown.html"><span class="n">D17</span><span class="t">Dependent Dropdown: Country to State</span></a>
+<a class="card" href="dom-image-slideshow.html"><span class="n">D18</span><span class="t">Image Slideshow / Carousel</span></a>
+<a class="card" href="dom-show-hide-content.html"><span class="n">D19</span><span class="t">Show / Hide Content Button</span></a>
+<a class="card" href="dom-tabs-interface.html"><span class="n">D20</span><span class="t">Tabs Interface Using DOM Manipulation</span></a>
+<a class="card" href="dom-accordion.html"><span class="n">D21</span><span class="t">Accordion Using JavaScript</span></a>
+<a class="card" href="dom-modal-popup.html"><span class="n">D22</span><span class="t">Modal Popup Using JavaScript</span></a>
+<a class="card" href="dom-tooltip-dynamic.html"><span class="n">D23</span><span class="t">Create a Tooltip Dynamically</span></a>
+<a class="card" href="dom-current-date-time.html"><span class="n">D24</span><span class="t">Display Current Date & Time Dynamically</span></a>
+<a class="card" href="dom-todo-list-manipulation.html"><span class="n">D25</span><span class="t">To-Do List Using DOM Manipulation</span></a>
+<a class="card" href="dom-add-edit-delete-todo.html"><span class="n">D26</span><span class="t">Add, Edit, and Delete To-Do Items</span></a>
+<a class="card" href="dom-createelement-appendchild-remove.html"><span class="n">D27</span><span class="t">createElement/appendChild/remove/replaceChild</span></a>
+<a class="card" href="dom-replace-element.html"><span class="n">D28</span><span class="t">Replace an Element with a New Element</span></a>
+<a class="card" href="dom-add-options-to-select.html"><span class="n">D29</span><span class="t">Add Options Dynamically to a Select</span></a>
+<a class="card" href="dom-image-gallery-from-array.html"><span class="n">D30</span><span class="t">Image Gallery Dynamically from an Array</span></a>
+
+  </div>
+</div>
+</body>
+</html>

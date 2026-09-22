@@ -1,0 +1,68 @@
+{
+  "info": {
+    "name": "Todo REST API - Node Lab",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [{ "key": "baseUrl", "value": "http://localhost:3000" }],
+  "item": [
+    {
+      "name": "GET all todos",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/todos" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+        "pm.test('Body is an array', () => pm.expect(pm.response.json()).to.be.an('array'));"
+      ] } }]
+    },
+    {
+      "name": "POST create todo",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\"title\":\"Write tests\"}" },
+        "url": "{{baseUrl}}/api/todos"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+        "pm.collectionVariables.set('todoId', pm.response.json().id);"
+      ] } }]
+    },
+    {
+      "name": "GET todo by id",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/todos/{{todoId}}" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Status is 200', () => pm.response.to.have.status(200));"
+      ] } }]
+    },
+    {
+      "name": "PUT update todo",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\"title\":\"Write more tests\",\"completed\":true}" },
+        "url": "{{baseUrl}}/api/todos/{{todoId}}"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Completed is true', () => pm.expect(pm.response.json().completed).to.eql(true));"
+      ] } }]
+    },
+    {
+      "name": "DELETE todo",
+      "request": { "method": "DELETE", "url": "{{baseUrl}}/api/todos/{{todoId}}" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Status is 204', () => pm.response.to.have.status(204));"
+      ] } }]
+    },
+    {
+      "name": "POST invalid todo (400)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{}" },
+        "url": "{{baseUrl}}/api/todos"
+      },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": [
+        "pm.test('Status is 400', () => pm.response.to.have.status(400));"
+      ] } }]
+    }
+  ]
+}

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Lab Programs — Index</title>
+<style>
+  :root{
+    --bg:#0f1220; --panel:#171b2e; --panel2:#1d2238; --border:#2a2f4a;
+    --text:#e8e9f3; --muted:#9aa1c3; --accent:#7c8cff; --accent2:#4fd6c2;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(circle at top left,#1a1f3a,#0b0d17 60%);
+    color:var(--text); min-height:100vh; padding:40px 20px 60px;
+  }
+  .wrap{max-width:1080px;margin:0 auto;}
+  header{text-align:center;margin-bottom:34px;}
+  header .badge{
+    display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#0b0d17;font-weight:700;padding:5px 16px;border-radius:20px;font-size:13px;margin-bottom:14px;
+  }
+  header h1{font-size:32px;margin:6px 0 8px;background:linear-gradient(135deg,#fff,#b8bfff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  header p{color:var(--muted);font-size:15px;margin:0;}
+  .stats{display:flex;gap:14px;justify-content:center;margin-top:20px;flex-wrap:wrap;}
+  .stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 22px;text-align:center;min-width:110px;}
+  .stat b{display:block;font-size:22px;color:var(--accent2);}
+  .stat span{font-size:12px;color:var(--muted);}
+  .section{margin-top:34px;}
+  .section-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--border);padding-bottom:10px;margin-bottom:16px;flex-wrap:wrap;gap:6px;}
+  .section-head h2{font-size:18px;margin:0;color:var(--text);}
+  .section-head .range{font-size:12px;color:var(--muted);}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));gap:12px;}
+  .prog-card{
+    display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,var(--panel),var(--panel2));
+    border:1px solid var(--border);border-radius:12px;padding:12px 14px;text-decoration:none;color:var(--text);
+    transition:.15s; font-size:13.5px;
+  }
+  .prog-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 20px rgba(124,140,255,.25);}
+  .qnum{background:#232848;color:var(--accent2);font-weight:700;font-size:11px;padding:3px 8px;border-radius:6px;flex-shrink:0;}
+  .ptitle{line-height:1.3;}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:50px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="badge">JavaScript Laboratory</span>
+    <h1>JavaScript Lab Programs</h1>
+    <p>A complete collection of JavaScript exercises — basics, DOM/events, and advanced concepts.</p>
+    <div class="stats">
+      <div class="stat"><b>65</b><span>Total Programs</span></div>
+      <div class="stat"><b>4</b><span>Sections</span></div>
+      <div class="stat"><b>100%</b><span>Runnable in Browser</span></div>
+    </div>
+  </header>
+  
+    <div class="section">
+      <div class="section-head">
+        <h2>Section 1 · Basic JavaScript Programs</h2>
+        <span class="range">Q1 – Q20 &middot; 20 programs</span>
+      </div>
+      <div class="grid">
+        <a class="prog-card" href="01-Basic-Programs/01-display-hello-world.html">
+          <span class="qnum">Q1</span>
+          <span class="ptitle">Display Hello World</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/02-arithmetic-operations.html">
+          <span class="qnum">Q2</span>
+          <span class="ptitle">Arithmetic Operations</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/03-largest-of-three-numbers.html">
+          <span class="qnum">Q3</span>
+          <span class="ptitle">Largest of Three Numbers</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/04-check-even-or-odd.html">
+          <span class="qnum">Q4</span>
+          <span class="ptitle">Check Even or Odd</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/05-positive-negative-or-zero.html">
+          <span class="qnum">Q5</span>
+          <span class="ptitle">Positive, Negative or Zero</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/06-factorial-of-a-number.html">
+          <span class="qnum">Q6</span>
+          <span class="ptitle">Factorial of a Number</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/07-fibonacci-series.html">
+          <span class="qnum">Q7</span>
+          <span class="ptitle">Fibonacci Series</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/08-check-prime-number.html">
+          <span class="qnum">Q8</span>
+          <span class="ptitle">Check Prime Number</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/09-check-palindrome-number.html">
+          <span class="qnum">Q9</span>
+          <span class="ptitle">Check Palindrome Number</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/10-reverse-a-number.html">
+          <span class="qnum">Q10</span>
+          <span class="ptitle">Reverse a Number</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/11-sum-of-digits.html">
+          <span class="qnum">Q11</span>
+          <span class="ptitle">Sum of Digits</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/12-largest-&-smallest-in-array.html">
+          <span class="qnum">Q12</span>
+          <span class="ptitle">Largest &amp; Smallest in Array</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/13-sort-an-array.html">
+          <span class="qnum">Q13</span>
+          <span class="ptitle">Sort an Array</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/14-sum-and-average-of-array.html">
+          <span class="qnum">Q14</span>
+          <span class="ptitle">Sum and Average of Array</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/15-javascript-functions.html">
+          <span class="qnum">Q15</span>
+          <span class="ptitle">JavaScript Functions</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/16-arrow-functions.html">
+          <span class="qnum">Q16</span>
+          <span class="ptitle">Arrow Functions</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/17-strings-and-string-methods.html">
+          <span class="qnum">Q17</span>
+          <span class="ptitle">Strings and String Methods</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/18-arrays-and-array-methods.html">
+          <span class="qnum">Q18</span>
+          <span class="ptitle">Arrays and Array Methods</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/19-objects-in-javascript.html">
+          <span class="qnum">Q19</span>
+          <span class="ptitle">Objects in JavaScript</span>
+        </a>
+        <a class="prog-card" href="01-Basic-Programs/20-date-and-math-objects.html">
+          <span class="qnum">Q20</span>
+          <span class="ptitle">Date and Math Objects</span>
+        </a>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-head">
+        <h2>Section 2 · DOM & Event-Based Programs</h2>
+        <span class="range">Q22 – Q36 &middot; 15 programs</span>
+      </div>
+      <div class="grid">
+        <a class="prog-card" href="02-DOM-Event-Programs/22-change-text-using-javascript.html">
+          <span class="qnum">Q22</span>
+          <span class="ptitle">Change Text Using JavaScript</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/23-change-background-color.html">
+          <span class="qnum">Q23</span>
+          <span class="ptitle">Change Background Color</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/24-button-click-event.html">
+          <span class="qnum">Q24</span>
+          <span class="ptitle">Button Click Event</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/25-showhide-an-html-element.html">
+          <span class="qnum">Q25</span>
+          <span class="ptitle">Show/Hide an HTML Element</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/26-change-image-on-button-click.html">
+          <span class="qnum">Q26</span>
+          <span class="ptitle">Change Image on Button Click</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/27-digital-clock.html">
+          <span class="qnum">Q27</span>
+          <span class="ptitle">Digital Clock</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/28-simple-calculator.html">
+          <span class="qnum">Q28</span>
+          <span class="ptitle">Simple Calculator</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/29-number-guessing-game.html">
+          <span class="qnum">Q29</span>
+          <span class="ptitle">Number Guessing Game</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/30-form-validation-program.html">
+          <span class="qnum">Q30</span>
+          <span class="ptitle">Form Validation Program</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/31-validate-name-email-phone-password.html">
+          <span class="qnum">Q31</span>
+          <span class="ptitle">Validate Name, Email, Phone, Password</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/32-to-do-list.html">
+          <span class="qnum">Q32</span>
+          <span class="ptitle">To-Do List</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/33-simple-quiz-application.html">
+          <span class="qnum">Q33</span>
+          <span class="ptitle">Simple Quiz Application</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/34-counter-with-incrementdecrement.html">
+          <span class="qnum">Q34</span>
+          <span class="ptitle">Counter with Increment/Decrement</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/35-stopwatch.html">
+          <span class="qnum">Q35</span>
+          <span class="ptitle">Stopwatch</span>
+        </a>
+        <a class="prog-card" href="02-DOM-Event-Programs/36-countdown-timer.html">
+          <span class="qnum">Q36</span>
+          <span class="ptitle">Countdown Timer</span>
+        </a>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-head">
+        <h2>Section 3 · Advanced JavaScript</h2>
+        <span class="range">Q38 – Q47 &middot; 10 programs</span>
+      </div>
+      <div class="grid">
+        <a class="prog-card" href="03-Advanced-JS/38-es6-let-const-template-literals-destructuring.html">
+          <span class="qnum">Q38</span>
+          <span class="ptitle">ES6: let, const, Template Literals, Destructuring</span>
+        </a>
+        <a class="prog-card" href="03-Advanced-JS/39-spread-and-rest-operators.html">
+          <span class="qnum">Q39</span>
+          <span class="ptitle">Spread and Rest Operators</span>
+        </a>
+        <a class="prog-card" href="03-Advanced-JS/40-classes-and-objects.html">
+          <span class="qnum">Q40</span>
+          <span class="ptitle">Classes and Objects</span>
+        </a>
+        <a class="prog-card" href="03-Advanced-JS/41-inheritance-in-javascript.html">
+          <span class="qnum">Q41</span>
+          <span class="ptitle">Inheritance in JavaScript</span>
+        </a>
+        <a class="prog-card" href="03-Advanced-JS/42-callbacks-promises-and-asyncawait.html">
+          <span class="qnum">Q42</span>
+          <span class="ptitle">Callbacks, Promises, and Async/Await</span>
+        </a>
+        <a class="prog-card" href="03-Advanced-JS/43-fetch-data-from-an-api.html">
+          <span class="qnum">Q43</span>
+          <span class="ptitle">Fetch Data from an API</span>
+        </a>
+        <a class="prog-card" href="03-Advanced-JS/44-display-api-data-dynamically.html">
+          <span class="qnum">Q44</span>
+          <span class="ptitle">Display API Data Dynamically</span>
+        </a>
+        <a class="prog-card" href="03-Advanced-JS/45-localstorage-—-store-and-retrieve-data.html">
+          <span class="qnum">Q45</span>
+          <span class="ptitle">localStorage — Store and Retrieve Data</span>
+        </a>
+        <a class="prog-card" href="03-Advanced-JS/46-responsive-login-form-with-validation.html">
+          <span class="qnum">Q46</span>
+          <span class="ptitle">Responsive Login Form with Validation</span>
+        </a>
+        <a class="prog-card" href="03-Advanced-JS/47-complete-interactive-webpage.html">
+          <span class="qnum">Q47</span>
+          <span class="ptitle">Complete Interactive Webpage</span>
+        </a>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-head">
+        <h2>Section 4 · More Basic Programs</h2>
+        <span class="range">Q48 – Q67 &middot; 20 programs</span>
+      </div>
+      <div class="grid">
+        <a class="prog-card" href="04-More-Basic-Programs/48-swap-two-numbers.html">
+          <span class="qnum">Q48</span>
+          <span class="ptitle">Swap Two Numbers</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/49-gcd-of-two-numbers.html">
+          <span class="qnum">Q49</span>
+          <span class="ptitle">GCD of Two Numbers</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/50-lcm-of-two-numbers.html">
+          <span class="qnum">Q50</span>
+          <span class="ptitle">LCM of Two Numbers</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/51-check-armstrong-number.html">
+          <span class="qnum">Q51</span>
+          <span class="ptitle">Check Armstrong Number</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/52-check-perfect-number.html">
+          <span class="qnum">Q52</span>
+          <span class="ptitle">Check Perfect Number</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/53-multiplication-table.html">
+          <span class="qnum">Q53</span>
+          <span class="ptitle">Multiplication Table</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/54-power-of-a-number.html">
+          <span class="qnum">Q54</span>
+          <span class="ptitle">Power of a Number</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/55-count-digits-in-a-number.html">
+          <span class="qnum">Q55</span>
+          <span class="ptitle">Count Digits in a Number</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/56-second-largest-element-in-array.html">
+          <span class="qnum">Q56</span>
+          <span class="ptitle">Second Largest Element in Array</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/57-remove-duplicate-elements-from-array.html">
+          <span class="qnum">Q57</span>
+          <span class="ptitle">Remove Duplicate Elements from Array</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/58-merge-two-arrays.html">
+          <span class="qnum">Q58</span>
+          <span class="ptitle">Merge Two Arrays</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/59-frequency-of-each-element-in-array.html">
+          <span class="qnum">Q59</span>
+          <span class="ptitle">Frequency of Each Element in Array</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/60-common-elements-in-two-arrays.html">
+          <span class="qnum">Q60</span>
+          <span class="ptitle">Common Elements in Two Arrays</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/61-reverse-a-string.html">
+          <span class="qnum">Q61</span>
+          <span class="ptitle">Reverse a String</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/62-check-palindrome-string.html">
+          <span class="qnum">Q62</span>
+          <span class="ptitle">Check Palindrome String</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/63-count-vowels-and-consonants.html">
+          <span class="qnum">Q63</span>
+          <span class="ptitle">Count Vowels and Consonants</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/64-count-number-of-words-in-a-string.html">
+          <span class="qnum">Q64</span>
+          <span class="ptitle">Count Number of Words in a String</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/65-frequency-of-characters-in-a-string.html">
+          <span class="qnum">Q65</span>
+          <span class="ptitle">Frequency of Characters in a String</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/66-regular-expressions-demo.html">
+          <span class="qnum">Q66</span>
+          <span class="ptitle">Regular Expressions Demo</span>
+        </a>
+        <a class="prog-card" href="04-More-Basic-Programs/67-validate-email-address-regex.html">
+          <span class="qnum">Q67</span>
+          <span class="ptitle">Validate Email Address (Regex)</span>
+        </a>
+      </div>
+    </div>
+  <footer>SAI University · Section Sec-06 · JavaScript Lab Exercises</footer>
+</div>
+</body>
+</html>

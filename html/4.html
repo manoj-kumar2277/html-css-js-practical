@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>4. Images and Hyperlinks</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background:#0f172a; color:#e2e8f0; max-width:800px; margin:40px auto; padding:0 20px; }
+  h1 { color:#38bdf8; text-align:center; }
+  h2 { color:#facc15; }
+  .gallery { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+  .gallery img { border:3px solid #38bdf8; border-radius:10px; width:220px; height:150px; object-fit:cover; }
+  a { color:#4ade80; text-decoration:none; font-weight:bold; }
+  a:hover { text-decoration:underline; color:#f97316; }
+  .box { background:#1e293b; padding:16px 20px; border-radius:8px; margin:20px 0; }
+</style>
+</head>
+<body>
+
+  <h1>Images &amp; Hyperlinks Demo</h1>
+
+  <div class="box">
+    <h2>Image Gallery</h2>
+    <div class="gallery">
+      <img src="https://picsum.photos/id/1015/220/150" alt="Mountain river landscape">
+      <img src="https://picsum.photos/id/1016/220/150" alt="Rocky mountain range">
+      <img src="https://picsum.photos/id/1018/220/150" alt="Forest and lake view">
+    </div>
+  </div>
+
+  <div class="box">
+    <h2>Hyperlinks</h2>
+    <p><strong>External link:</strong> <a href="https://www.wikipedia.org" target="_blank">Visit Wikipedia</a></p>
+    <p><strong>Email link:</strong> <a href="mailto:student@example.com">Send an email</a></p>
+    <p><strong>Internal page anchor:</strong> <a href="#bottom">Jump to bottom of this page</a></p>
+    <p><strong>Image as a link:</strong></p>
+    <a href="https://www.wikipedia.org" target="_blank">
+      <img src="https://picsum.photos/id/1019/220/150" alt="Clickable scenic image">
+    </a>
+  </div>
+
+  <p id="bottom" class="box">You reached the bottom of the page via the anchor link above! 🎉</p>
+
+  <nav style="margin-top:30px; padding-top:15px; border-top:2px solid #0f6674;">
+    <a href="../index.html" style="margin-right:15px; color:#0f6674; font-weight:bold; text-decoration:none;">🏠 Home</a>
+    <a href="index.html" style="color:#0f6674; font-weight:bold; text-decoration:none;">⬅ Back to HTML Programs</a>
+  </nav>
+
+</body>
+</html>

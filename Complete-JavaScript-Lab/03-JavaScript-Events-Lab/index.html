@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Events Lab — Index</title>
+<style>
+  :root{--bg:#0f1220;--panel:#171b2e;--panel2:#1d2238;--border:#2a2f4a;--text:#e8e9f3;--muted:#9aa1c3;--accent:#7c8cff;--accent2:#4fd6c2;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:radial-gradient(circle at top left,#1a1f3a,#0b0d17 60%);color:var(--text);min-height:100vh;padding:40px 20px 60px;}
+  .wrap{max-width:960px;margin:0 auto;}
+  header{text-align:center;margin-bottom:34px;}
+  header .badge{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0b0d17;font-weight:700;padding:5px 16px;border-radius:20px;font-size:13px;margin-bottom:14px;}
+  header h1{font-size:30px;margin:6px 0 8px;background:linear-gradient(135deg,#fff,#b8bfff);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  header p{color:var(--muted);font-size:15px;margin:0;}
+  .stats{display:flex;gap:14px;justify-content:center;margin-top:20px;flex-wrap:wrap;}
+  .stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 22px;text-align:center;min-width:110px;}
+  .stat b{display:block;font-size:22px;color:var(--accent2);}
+  .stat span{font-size:12px;color:var(--muted);}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));gap:12px;margin-top:32px;}
+  .prog-card{display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--border);border-radius:12px;padding:14px;text-decoration:none;color:var(--text);transition:.15s;font-size:13.5px;}
+  .prog-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 20px rgba(124,140,255,.25);}
+  .qnum{background:#232848;color:var(--accent2);font-weight:700;font-size:11px;padding:3px 8px;border-radius:6px;flex-shrink:0;}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:50px;}
+  a.back{display:block;text-align:center;color:var(--muted);text-decoration:none;font-size:13px;margin-top:6px;}
+  a.back:hover{color:var(--text);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="badge">Events Module</span>
+    <h1>JavaScript Events Lab</h1>
+    <p>Mouse, keyboard, form, and custom event-handling demos — bubbling, capturing, delegation, drag-and-drop and more.</p>
+    <div class="stats">
+      <div class="stat"><b>30</b><span>Programs</span></div>
+      <div class="stat"><b>100%</b><span>Interactive</span></div>
+      <div class="stat"><b>0</b><span>Dependencies</span></div>
+    </div>
+  </header>
+  <div class="grid">
+      <a class="prog-card" href="01-the-onclick-event.html">
+        <span class="qnum">1</span>
+        <span class="ptitle">The onclick Event</span>
+      </a>
+      <a class="prog-card" href="02-the-ondblclick-event.html">
+        <span class="qnum">2</span>
+        <span class="ptitle">The ondblclick Event</span>
+      </a>
+      <a class="prog-card" href="03-onmouseover-and-onmouseout.html">
+        <span class="qnum">3</span>
+        <span class="ptitle">onmouseover and onmouseout</span>
+      </a>
+      <a class="prog-card" href="04-onmousedown-and-onmouseup.html">
+        <span class="qnum">4</span>
+        <span class="ptitle">onmousedown and onmouseup</span>
+      </a>
+      <a class="prog-card" href="05-the-onmousemove-event.html">
+        <span class="qnum">5</span>
+        <span class="ptitle">The onmousemove Event</span>
+      </a>
+      <a class="prog-card" href="06-keyboard-events---keydown.html">
+        <span class="qnum">6</span>
+        <span class="ptitle">Keyboard Events — keydown</span>
+      </a>
+      <a class="prog-card" href="07-keyboard-events---keyup.html">
+        <span class="qnum">7</span>
+        <span class="ptitle">Keyboard Events — keyup</span>
+      </a>
+      <a class="prog-card" href="08-display-the-key-pressed-by-the-user.html">
+        <span class="qnum">8</span>
+        <span class="ptitle">Display the Key Pressed by the User</span>
+      </a>
+      <a class="prog-card" href="09-count-keyboard-key-presses.html">
+        <span class="qnum">9</span>
+        <span class="ptitle">Count Keyboard Key Presses</span>
+      </a>
+      <a class="prog-card" href="10-focus-and-blur-events.html">
+        <span class="qnum">10</span>
+        <span class="ptitle">Focus and Blur Events</span>
+      </a>
+      <a class="prog-card" href="11-the-change-event.html">
+        <span class="qnum">11</span>
+        <span class="ptitle">The change Event</span>
+      </a>
+      <a class="prog-card" href="12-the-input-event.html">
+        <span class="qnum">12</span>
+        <span class="ptitle">The input Event</span>
+      </a>
+      <a class="prog-card" href="13-the-submit-event.html">
+        <span class="qnum">13</span>
+        <span class="ptitle">The submit Event</span>
+      </a>
+      <a class="prog-card" href="14-the-reset-event.html">
+        <span class="qnum">14</span>
+        <span class="ptitle">The reset Event</span>
+      </a>
+      <a class="prog-card" href="15-button-changes-background-color.html">
+        <span class="qnum">15</span>
+        <span class="ptitle">Button Changes Background Color</span>
+      </a>
+      <a class="prog-card" href="16-button-changes-font-size-dynamically.html">
+        <span class="qnum">16</span>
+        <span class="ptitle">Button Changes Font Size Dynamically</span>
+      </a>
+      <a class="prog-card" href="17-multiple-buttons-with-different-event-handlers.html">
+        <span class="qnum">17</span>
+        <span class="ptitle">Multiple Buttons with Different Event Handlers</span>
+      </a>
+      <a class="prog-card" href="18-event-listeners-with-addeventlistener.html">
+        <span class="qnum">18</span>
+        <span class="ptitle">Event Listeners with addEventListener()</span>
+      </a>
+      <a class="prog-card" href="19-multiple-event-listeners-on-one-element.html">
+        <span class="qnum">19</span>
+        <span class="ptitle">Multiple Event Listeners on One Element</span>
+      </a>
+      <a class="prog-card" href="20-removing-an-event-listener-with-removeeventlistene.html">
+        <span class="qnum">20</span>
+        <span class="ptitle">Removing an Event Listener with removeEventListener()</span>
+      </a>
+      <a class="prog-card" href="21-event-bubbling.html">
+        <span class="qnum">21</span>
+        <span class="ptitle">Event Bubbling</span>
+      </a>
+      <a class="prog-card" href="22-event-capturing.html">
+        <span class="qnum">22</span>
+        <span class="ptitle">Event Capturing</span>
+      </a>
+      <a class="prog-card" href="23-event-delegation.html">
+        <span class="qnum">23</span>
+        <span class="ptitle">Event Delegation</span>
+      </a>
+      <a class="prog-card" href="24-drag-and-drop-application.html">
+        <span class="qnum">24</span>
+        <span class="ptitle">Drag-and-Drop Application</span>
+      </a>
+      <a class="prog-card" href="25-mouse-coordinate-tracker.html">
+        <span class="qnum">25</span>
+        <span class="ptitle">Mouse Coordinate Tracker</span>
+      </a>
+      <a class="prog-card" href="26-keyboard-controlled-moving-object.html">
+        <span class="qnum">26</span>
+        <span class="ptitle">Keyboard-Controlled Moving Object</span>
+      </a>
+      <a class="prog-card" href="27-click-counter.html">
+        <span class="qnum">27</span>
+        <span class="ptitle">Click Counter</span>
+      </a>
+      <a class="prog-card" href="28-double-click-counter.html">
+        <span class="qnum">28</span>
+        <span class="ptitle">Double-Click Counter</span>
+      </a>
+      <a class="prog-card" href="29-reaction-time-game.html">
+        <span class="qnum">29</span>
+        <span class="ptitle">Reaction-Time Game</span>
+      </a>
+      <a class="prog-card" href="30-simple-keyboard-typing-test.html">
+        <span class="qnum">30</span>
+        <span class="ptitle">Simple Keyboard Typing Test</span>
+      </a>
+  </div>
+  <a class="back" href="../index.html">&larr; Back to Master Index</a>
+  <footer>SAI University · Section Sec-06 · JavaScript Events Lab</footer>
+</div>
+</body>
+</html>

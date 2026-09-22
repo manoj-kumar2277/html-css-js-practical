@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>239. SaaS User Profile Menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --bg:#12111a; --panel:#1b1a26; --panel-alt:#221f30; --line:#322f42;
+  --text:#eae7f2; --text-dim:#9c96ad; --amber:#e8a33d; --teal:#4fd1c5; --coral:#ff6b7a;
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.6;}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.01em;margin:0 0 .4em;}
+code,.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:var(--teal);}
+.wrap{max-width:820px;margin:0 auto;padding:2.5rem 1.4rem 4rem;}
+.topbar{display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--text-dim);margin-bottom:1.6rem;}
+.topbar a{color:var(--text-dim);text-decoration:none;}
+.topbar a:hover{color:var(--teal);}
+.eyebrow{color:var(--amber);font-family:'IBM Plex Mono',monospace;font-size:.85rem;}
+h1.title{font-size:clamp(1.5rem,3vw,2.1rem);margin-top:.2rem;}
+p.desc{color:var(--text-dim);max-width:62ch;margin-bottom:1.6rem;}
+.demo{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.6rem;margin-bottom:2rem;overflow:hidden;}
+.navrow{display:flex;justify-content:space-between;gap:1rem;margin-top:2.4rem;border-top:1px solid var(--line);padding-top:1.4rem;}
+.navrow a{font-family:'IBM Plex Mono',monospace;font-size:.85rem;background:var(--panel-alt);border:1px solid var(--line);padding:.5rem .9rem;border-radius:8px;text-decoration:none;color:var(--text);}
+.navrow a:hover{border-color:var(--teal);color:var(--teal);}
+.navrow a.disabled{opacity:.35;pointer-events:none;}
+
+
+   .mini-card{background:var(--panel-alt);border-radius:12px;padding:1.1rem;max-width:340px;}
+   .pm-wrap{position:relative;display:inline-block;}
+   .pm-trigger{display:flex;align-items:center;gap:.5rem;cursor:pointer;background:var(--panel);border-radius:8px;padding:.4rem .7rem;}
+   .pm-av{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--amber));}
+   .pm-menu{position:absolute;top:2.6rem;right:0;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:.4rem;width:150px;}
+   .pm-menu a{display:block;padding:.4rem .6rem;border-radius:6px;color:var(--text-dim);text-decoration:none;font-size:.8rem;}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a href="../index.html">&larr; Home</a>
+    <span>CSS Practical Programs</span>
+    <a href="index.html">All CSS topics</a>
+  </div>
+  <span class="eyebrow">Topic 239</span>
+  <h1 class="title">SaaS User Profile Menu</h1>
+  <p class="desc">A dropdown menu triggered by an avatar, showing account actions.</p>
+  <div class="demo">
+    <div class="mini-card">
+      <div class="pm-wrap">
+        <div class="pm-trigger"><div class="pm-av"></div><span style="font-size:.82rem;">BROO &#9662;</span></div>
+        <div class="pm-menu"><a href="#">Profile</a><a href="#">Settings</a><a href="#">Log out</a></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="navrow">
+    <a href="238.html">&larr; 238</a>
+    <a href="240.html">240 &rarr;</a>
+  </div>
+</div>
+</body>
+</html>

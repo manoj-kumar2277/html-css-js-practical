@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--
+  Project: User Authentication System using Supabase
+  Features: register, login, logout, forgot / reset password, profile view + update, session persistence.
+  Setup   : Authentication > URL Configuration: add this page's URL to Redirect URLs (e.g. http://localhost:5500/**).
+            Serve with a local server (npx serve .) so password-reset links can return here. Put URL + anon key below.
+-->
+<html>
+<head>
+  <meta charset="utf-8"><title>User Authentication System</title>
+  <style>
+    body{font-family:Segoe UI,Arial;background:#eef2ff;display:flex;justify-content:center;padding-top:40px}
+    .box{background:#fff;width:380px;padding:24px;border-radius:12px;box-shadow:0 2px 12px #0002}
+    input{width:100%;padding:10px;margin:6px 0;border:1px solid #cbd5e1;border-radius:6px;box-sizing:border-box}
+    button{width:100%;padding:10px;margin-top:8px;border:0;border-radius:6px;background:#4f46e5;color:#fff;cursor:pointer}
+    button.link{background:none;color:#4f46e5;padding:4px;width:auto;margin:0}.hide{display:none}#msg{margin-top:10px;min-height:20px}.err{color:#dc2626}.ok{color:#16a34a}
+    dl{margin:0}dt{font-size:12px;color:#666;margin-top:8px}dd{margin:0;font-weight:600;word-break:break-all}
+  </style>
+</head>
+<body><div class="box">
+  <h2 id="title">Login</h2>
+
+  <div id="viewAuth">
+    <input id="name" class="hide" placeholder="Full name">
+    <input id="email" type="email" placeholder="Email"><input id="password" type="password" placeholder="Password (min 8)">
+    <button id="mainBtn" onclick="submitAuth()">Login</button>
+    <p><button class="link" onclick="toggleMode()" id="toggle">Need an account? Register</button>
+       <button class="link" onclick="forgot()">Forgot password?</button></p>
+  </div>
+
+  <div id="viewProfile" class="hide">
+    <dl><dt>User ID</dt><dd id="uid"></dd><dt>Email</dt><dd id="pemail"></dd><dt>Role</dt><dd id="prole"></dd><dt>Last sign-in</dt><dd id="plast"></dd></dl>
+    <input id="newName" placeholder="Update full name"><button onclick="updateName()">Save name</button>
+    <input id="newPass" type="password" placeholder="New password"><button onclick="updatePass()">Change password</button>
+    <button style="background:#dc2626" onclick="sb.auth.signOut()">Logout</button>
+  </div>
+
+  <div id="viewRecovery" class="hide">
+    <p>Choose a new password</p><input id="recPass" type="password" placeholder="New password"><button onclick="setRecovery()">Update password</button>
+  </div>
+  <div id="msg"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
+  const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const $ = (i) => document.getElementById(i); let registering = false;
+  const say = (t, ok) => { $('msg').textContent = t || ''; $('msg').className = ok ? 'ok' : 'err'; };
+  const view = (v) => ['viewAuth', 'viewProfile', 'viewRecovery'].forEach((x) => $(x).classList.toggle('hide', x !== v));
+
+  function toggleMode() {
+    registering = !registering;
+    $('name').classList.toggle('hide', !registering);
+    $('title').textContent = $('mainBtn').textContent = registering ? 'Register' : 'Login';
+    $('toggle').textContent = registering ? 'Have an account? Login' : 'Need an account? Register'; say('');
+  }
+  async function submitAuth() {
+    const email = $('email').value.trim(), password = $('password').value;
+    if (!email || password.length < 8) return say('Enter an email and a password of at least 8 characters');
+    if (registering) {
+      const { data, error } = await sb.auth.signUp({ email, password, options: { data: { full_name: $('name').value } } });
+      if (error) return say(error.message);
+      say(data.session ? 'Registered and logged in!' : 'Registered! Check your email to confirm.', true);
+    } else {
+      const { error } = await sb.auth.signInWithPassword({ email, password }); if (error) say(error.message);
+    }
+  }
+  async function forgot() {
+    const email = $('email').value.trim(); if (!email) return say('Type your email first');
+    const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: location.href.split('#')[0] });
+    say(error ? error.message : 'If the email exists, a reset link has been sent.', !error);
+  }
+  async function setRecovery() {
+    const { error } = await sb.auth.updateUser({ password: $('recPass').value });
+    say(error ? error.message : 'Password updated!', !error); if (!error) view('viewProfile');
+  }
+  async function showProfile(user) {
+    view('viewProfile'); $('title').textContent = 'My profile';
+    $('uid').textContent = user.id; $('pemail').textContent = user.email; $('plast').textContent = new Date(user.last_sign_in_at).toLocaleString();
+    const { data } = await sb.from('profiles').select('full_name, role').eq('id', user.id).maybeSingle();
+    $('prole').textContent = data?.role ?? 'user'; $('newName').value = data?.full_name ?? '';
+  }
+  async function updateName() {
+    const { data: { user } } = await sb.auth.getUser();
+    const { error } = await sb.from('profiles').update({ full_name: $('newName').value }).eq('id', user.id);
+    say(error ? error.message : 'Name saved', !error);
+  }
+  async function updatePass() {
+    const { error } = await sb.auth.updateUser({ password: $('newPass').value });
+    say(error ? error.message : 'Password changed', !error); $('newPass').value = '';
+  }
+  sb.auth.onAuthStateChange((event, session) => {
+    if (event === 'PASSWORD_RECOVERY') { view('viewRecovery'); $('title').textContent = 'Reset password'; }
+    else if (session) showProfile(session.user);
+    else { view('viewAuth'); $('title').textContent = registering ? 'Register' : 'Login'; }
+  });
+</script></body></html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>41. Mega Navigation Menu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --bg:#12111a; --panel:#1b1a26; --panel-alt:#221f30; --line:#322f42;
+  --text:#eae7f2; --text-dim:#9c96ad; --amber:#e8a33d; --teal:#4fd1c5; --coral:#ff6b7a;
+}
+*,*::before,*::after{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.6;}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.01em;margin:0 0 .4em;}
+code,.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:var(--teal);}
+.wrap{max-width:820px;margin:0 auto;padding:2.5rem 1.4rem 4rem;}
+.topbar{display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:.8rem;color:var(--text-dim);margin-bottom:1.6rem;}
+.topbar a{color:var(--text-dim);text-decoration:none;}
+.topbar a:hover{color:var(--teal);}
+.eyebrow{color:var(--amber);font-family:'IBM Plex Mono',monospace;font-size:.85rem;}
+h1.title{font-size:clamp(1.5rem,3vw,2.1rem);margin-top:.2rem;}
+p.desc{color:var(--text-dim);max-width:62ch;margin-bottom:1.6rem;}
+.demo{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.6rem;margin-bottom:2rem;overflow:hidden;}
+.navrow{display:flex;justify-content:space-between;gap:1rem;margin-top:2.4rem;border-top:1px solid var(--line);padding-top:1.4rem;}
+.navrow a{font-family:'IBM Plex Mono',monospace;font-size:.85rem;background:var(--panel-alt);border:1px solid var(--line);padding:.5rem .9rem;border-radius:8px;text-decoration:none;color:var(--text);}
+.navrow a:hover{border-color:var(--teal);color:var(--teal);}
+.navrow a.disabled{opacity:.35;pointer-events:none;}
+
+
+   .mnav{background:var(--panel-alt);border-radius:10px;padding:.9rem 1.2rem;position:relative;}
+   .mnav > a{color:var(--text-dim);text-decoration:none;font-size:.9rem;}
+   .mega{position:relative;display:inline-block;}
+   .mega-panel{display:none;position:absolute;top:1.8rem;left:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1rem;gap:1.6rem;width:400px;}
+   .mega:hover .mega-panel{display:flex;}
+   .mega-col h4{margin:0 0 .4rem;font-size:.8rem;color:var(--amber);}
+   .mega-col a{display:block;color:var(--text-dim);text-decoration:none;font-size:.85rem;padding:.2rem 0;}
+   .mega-col a:hover{color:var(--text);}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a href="../index.html">&larr; Home</a>
+    <span>CSS Practical Programs</span>
+    <a href="index.html">All CSS topics</a>
+  </div>
+  <span class="eyebrow">Topic 41</span>
+  <h1 class="title">Mega Navigation Menu</h1>
+  <p class="desc">A wide dropdown panel with multiple columns of links.</p>
+  <div class="demo">
+    <div class="mnav">
+      <div class="mega">
+        <a href="#">Solutions &#9662;</a>
+        <div class="mega-panel">
+          <div class="mega-col">
+            <h4>By Team</h4>
+            <a href="#">Engineering</a>
+            <a href="#">Marketing</a>
+          </div>
+          <div class="mega-col">
+            <h4>By Use Case</h4>
+            <a href="#">Analytics</a>
+            <a href="#">Automation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="navrow">
+    <a href="40.html">&larr; 40</a>
+    <a href="42.html">42 &rarr;</a>
+  </div>
+</div>
+</body>
+</html>

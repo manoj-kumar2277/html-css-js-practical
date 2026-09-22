@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q23 — Event Delegation</title>
+<style>
+  :root{
+    --bg:#0f1220; --panel:#171b2e; --panel2:#1d2238; --border:#2a2f4a;
+    --text:#e8e9f3; --muted:#9aa1c3; --accent:#7c8cff; --accent2:#4fd6c2;
+    --good:#4fd68b; --bad:#ff6b81; --code-bg:#11142200;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(circle at top left,#1a1f3a,#0b0d17 60%);
+    color:var(--text); min-height:100vh; padding:32px 16px;
+  }
+  .wrap{max-width:880px;margin:0 auto;}
+  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+  .badge{
+    display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:#0b0d17;font-weight:700;padding:4px 12px;border-radius:20px;font-size:13px;letter-spacing:.3px;
+  }
+  a.back{color:var(--muted);text-decoration:none;font-size:14px;border:1px solid var(--border);padding:6px 12px;border-radius:8px;transition:.2s;}
+  a.back:hover{color:var(--text);border-color:var(--accent);}
+  .card{
+    background:linear-gradient(180deg,var(--panel),var(--panel2));
+    border:1px solid var(--border); border-radius:16px; padding:28px 28px 24px;
+    box-shadow:0 10px 30px rgba(0,0,0,.35); margin-bottom:22px;
+  }
+  h1{margin:6px 0 8px;font-size:24px;letter-spacing:.2px;}
+  p.desc{color:var(--muted);margin:0 0 20px;line-height:1.55;font-size:15px;}
+  .section-label{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent2);font-weight:700;margin:0 0 10px;}
+  .inputs{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:18px;}
+  .field{display:flex;flex-direction:column;gap:6px;min-width:160px;flex:1;}
+  .field label{font-size:12px;color:var(--muted);}
+  .field input, .field select, .field textarea{
+    background:#0e1120;border:1px solid var(--border);color:var(--text);
+    padding:10px 12px;border-radius:10px;font-size:14px;outline:none;transition:.2s;font-family:inherit;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--accent);}
+  button{
+    background:linear-gradient(135deg,var(--accent),#5a67e0);border:none;color:white;
+    padding:11px 22px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;
+    transition:transform .12s, box-shadow .12s; box-shadow:0 4px 14px rgba(124,140,255,.35);
+  }
+  button:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(124,140,255,.5);}
+  button:active{transform:translateY(0);}
+  button.secondary{background:#232848;box-shadow:none;color:var(--text);border:1px solid var(--border);}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;}
+  .output{
+    background:#0a0c16;border:1px dashed var(--border);border-radius:12px;padding:16px 18px;
+    min-height:52px;font-family:'Consolas','Courier New',monospace;font-size:14px;white-space:pre-wrap;
+    color:var(--good);margin-top:6px;line-height:1.6;word-break:break-word;
+  }
+  .output .err{color:var(--bad);}
+  details{margin-top:22px;border-top:1px solid var(--border);padding-top:14px;}
+  summary{cursor:pointer;color:var(--muted);font-size:13px;font-weight:600;letter-spacing:.3px;outline:none;}
+  summary:hover{color:var(--text);}
+  pre.code{
+    background:#0a0c16;border:1px solid var(--border);border-radius:10px;padding:16px;
+    overflow-x:auto;font-family:'Consolas','Courier New',monospace;font-size:13px;line-height:1.55;
+    color:#d7d9ee;margin-top:12px;
+  }
+  pre.code .kw{color:#7c8cff;} pre.code .fn{color:#4fd6c2;} pre.code .cm{color:#6a708f;font-style:italic;}
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:26px;}
+  table{width:100%;border-collapse:collapse;margin-top:6px;}
+  table th,table td{border:1px solid var(--border);padding:6px 10px;text-align:center;font-size:13px;}
+  table th{background:#1d2238;color:var(--accent2);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <span class="badge">Question 23 · JS Events</span>
+    <a class="back" href="index.html">&larr; Back to Index</a>
+  </div>
+  <div class="card">
+    <div class="section-label">JavaScript Program</div>
+    <h1>Event Delegation</h1>
+    <p class="desc">Attaches a single listener to a parent container to handle clicks on any of its (even future) children.</p>
+
+    <div class="inputs">
+      <div class="field" style="flex:2"><ul id="delegList" style="list-style:none;padding:0;display:flex;flex-direction:column;gap:6px;">
+        <li style="padding:8px;background:#1d2238;border-radius:6px;cursor:pointer;">Item One</li>
+        <li style="padding:8px;background:#1d2238;border-radius:6px;cursor:pointer;">Item Two</li>
+      </ul></div>
+    </div>
+    <div class="btn-row">
+      <button onclick="runProgram()">▶ Run</button>
+      <button class="secondary" onclick="clearOutput()">Clear</button>
+    </div>
+    <div class="output" id="output">Click "Run" to see the result…</div>
+
+    <details>
+      <summary>View Source Code</summary>
+      <pre class="code">list.addEventListener(&#x27;click&#x27;, (e) =&gt; {
+  if(e.target.tagName === &#x27;LI&#x27;) console.log(e.target.textContent);
+});</pre>
+    </details>
+  </div>
+  <footer>SAI University · Section Sec-06 · JavaScript Lab Exercises</footer>
+</div>
+
+<script>
+function clearOutput(){
+  document.getElementById('output').innerHTML = 'Click "Run" to see the result…';
+}
+function printOut(html){
+  document.getElementById('output').innerHTML = html;
+}
+function runProgram(){
+  const list = document.getElementById('delegList');
+  list.addEventListener('click', function delegated(e){
+    if(e.target.tagName === 'LI') printOut(`Delegated handler caught a click on: "${e.target.textContent}"`);
+  });
+  const newLi = document.createElement('li');
+  newLi.textContent = "New item (added after listener attached)";
+  newLi.style.cssText = "padding:8px;background:#1d2238;border-radius:6px;margin-top:6px;cursor:pointer;";
+  list.appendChild(newLi);
+  printOut("One listener attached to the parent <ul> — click any item, including the newly added one.");
+}
+</script>
+</body>
+</html>
